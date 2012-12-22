@@ -7,7 +7,7 @@ Vagrant::Config.run do |config|
     chef.chef_server_url = "https://api.opscode.com/organizations/vine"
     chef.validation_key_path = "./.chef/vine-validator.pem"
     chef.validation_client_name = "vine-validator"
-    chef.node_name = "vagrant.vm"
+    chef.node_name = "dev_all"
   end
   
 end
