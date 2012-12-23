@@ -1,0 +1,65 @@
+{
+  "id": "dev_data",
+  "server": {
+    "domain": "dev.vine.im",
+    "ip": "127.0.0.1",
+    "xmlrpc": "dev.vine.im"
+  },
+  "ports": {
+    "component": 5237,
+    "client": 5222,
+    "xmlrpc": 4560
+  },
+  "mysql": {
+    "host": "localhost",
+    "main_name": "vine",
+    "celery_name": "celery_db",
+    "web_user": "web",
+    "web_password": "ish9gen8ob8hap7ac9hy",
+    "graph_user": "graph",
+    "graph_password": "nay4wem6nis3yu8i3thr",
+    "celery_user": "celery",
+    "celery_password": "fayk6fu3frob3baj6mi8",
+    "leaves_user": "leaves",
+    "leaves_password": "ish9gen8ob8hap7ac9hy"
+  },
+  "aws": {
+    "sqs_prefix": "vine-dev-",
+    "user_comment": "vine-dev-1 AWS IAM user",
+    "access_key_id": "AKIAJXHFTLX4Y24RD7EA",
+    "secret_access_key": "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"
+  },
+  "twitter": {
+    "consumer_key": "7MDE19OK3Vk3e6QMJ0Xow",
+    "consumer_secret": "VcUyKhrSP27HcW1iLLU8yKLlcpmtqDFyVtMQ7Tk1Y"
+  },
+  "flask": {
+    "debug": true,
+    "secret_key": "development key"
+  },
+  "leaves": {
+    "xmpp_user": "leaf",
+    "domain_prefix": "leaves",
+    "secret": "is3joic8vorn8uf4ge4o",
+    "max_leaves": 10
+  },
+  "xmlrpc": {
+    "leaves_user": "_leaves",
+    "leaves_password": "wraf7marj7og4e7ob4je",
+    "graph_user": "_graph",
+    "graph_password": "av5oap7vek5ka8gry6ph",
+    "web_user": "_web",
+    "web_password": "dirj8owp2og3mob6yeg2"
+  },
+  "xmpp": {
+    "default_password": "dirj8owp2og3mob6yeg2",
+    "admin_users": ["admin1", "admin2"]
+  },
+  "twilio": {
+    "watched_usernames": [],
+    "account_sid": "AC94ebb7a389884563bb59bcc318c6cfc8",
+    "auth_token": "no dev version!",
+    "from_number": "+17542276773",
+    "to_numbers": []
+  }
+}
