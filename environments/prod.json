@@ -6,6 +6,7 @@
   "json_class": "Chef::Environment",
   "chef_type": "environment",
   "default_attributes": {
+    "source_dir": "/home/ec2-user/source_dir"
   },
   "override_attributes": {
   }
