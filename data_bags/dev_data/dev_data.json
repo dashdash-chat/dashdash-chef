@@ -15,6 +15,10 @@
     "client": 5222,
     "xmlrpc": 4560
   },
+  "supervisor": {
+    "user": "admin",
+    "password": "password"
+  },
   "mysql": {
     "host": "localhost",
     "main_name": "vine",
