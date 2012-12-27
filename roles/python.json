@@ -9,6 +9,8 @@
   "chef_type": "role",
   "run_list": [
     "recipe[python]",
+    "recipe[mysql::server]",
+    "recipe[database::mysql]",
     "recipe[supervisord]",
     "recipe[nginx]"
   ],
