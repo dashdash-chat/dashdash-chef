@@ -23,6 +23,7 @@
     "host": "localhost",
     "main_name": "vine",
     "celery_name": "celery_db",
+    "root_password": "os6juc8ik4if6jiev3co",
     "web_user": "web",
     "web_password": "ish9gen8ob8hap7ac9hy",
     "graph_user": "graph",
