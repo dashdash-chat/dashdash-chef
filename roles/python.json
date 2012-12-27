@@ -1,6 +1,6 @@
 {
-  "name": "web",
-  "description": "the web server",
+  "name": "python",
+  "description": "recipes for managing instances with python processes",
   "json_class": "Chef::Role",
   "default_attributes": {
   },
@@ -8,9 +8,9 @@
   },
   "chef_type": "role",
   "run_list": [
-    "role[base]",
-    "role[python]",
-    "recipe[vine_web]"
+    "recipe[python]",
+    "recipe[supervisord]",
+    "recipe[nginx]"
   ],
   "env_run_lists": {
   }
