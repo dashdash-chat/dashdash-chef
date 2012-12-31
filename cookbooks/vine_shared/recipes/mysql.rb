@@ -1,8 +1,8 @@
 env_data = data_bag_item("dev_data", "dev_data")
 if node.chef_environment == "dev"
-  node.set['mysql']['server_root_password'] = env_data["mysql"]["root_password"]
   mysql_connection_info = {:host => env_data["mysql"]["host"], :username => 'root', :password => env_data["mysql"]["root_password"]}
   directory node['vine_shared']['mysql_dir'] do
+    recursive true
     action :create
   end
   
