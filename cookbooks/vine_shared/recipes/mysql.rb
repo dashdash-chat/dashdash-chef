@@ -132,7 +132,7 @@ if node.chef_environment == "dev"
   end
   
   # grant privileges to the celery user
-  [[env_data["mysql"]["celery_name"], '*',             [:all]],
+  [[env_data["mysql"]["celery_name"], nil,             [:all]],  #NOTE this will replace 'nil' with the default of '*'
    [env_data["mysql"]["main_name"], 'users',           [:select]],
    [env_data["mysql"]["main_name"], 'twitter_follows', [:select, :update, :insert, :delete]]
   ].each do |db_table_privileges|
