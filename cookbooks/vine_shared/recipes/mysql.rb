@@ -18,6 +18,9 @@ if node.chef_environment == "dev"
       #NOTE only overwrite existing dumps, but if this is the first provision we want to use the init file
     end
     cookbook_file "#{node['vine_shared']['mysql_dir']}/#{db_name}.sql" do
+      owner env_data["server"]["user"]
+      group env_data["server"]["group"]
+      mode 0444
       source "init_#{db_name}.sql"
       action :create_if_missing
     end
@@ -51,6 +54,9 @@ if node.chef_environment == "dev"
   ].each do |table_name|
     cookbook_file "#{node['vine_shared']['mysql_dir']}/#{table_name}.sql" do
       source "#{table_name}.sql"
+      owner env_data["server"]["user"]
+      group env_data["server"]["group"]
+      mode 0444
       action :create
     end
     mysql_database "create table #{table_name}" do
