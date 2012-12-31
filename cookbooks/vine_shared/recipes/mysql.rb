@@ -14,6 +14,12 @@ if node.chef_environment == "dev"
       command "mysqldump --no-create-info -h #{env_data["mysql"]["host"]} -u root -p#{env_data["mysql"]["root_password"]} #{db_name} > #{node['vine_shared']['mysql_dir']}/#{db_name}.sql"
       #NOTE the --no-create-info flag, so we can try to re-populate our tables with the previous data
       action :run
+      only_if {File.exists?("#{node['vine_shared']['mysql_dir']}/#{db_name}.sql")}
+      #NOTE only overwrite existing dumps, but if this is the first provision we want to use the init file
+    end
+    cookbook_file "#{node['vine_shared']['mysql_dir']}/#{db_name}.sql" do
+      source "init_#{db_name}.sql"
+      action :create_if_missing
     end
     mysql_database db_name do
       connection mysql_connection_info
