@@ -1,5 +1,5 @@
-maintainer       "YOUR_COMPANY_NAME"
-maintainer_email "YOUR_EMAIL"
+maintainer       "Vine.IM"
+maintainer_email "lehrburger@gmail.com"
 license          "All rights reserved"
 description      "Installs/Configures vine_ejabberd"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
