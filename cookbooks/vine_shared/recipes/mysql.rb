@@ -100,7 +100,6 @@ if node.chef_environment == "dev"
   ].each do |db_table_privileges|
     mysql_database_user env_data["mysql"]["web_user"] do
       connection mysql_connection_info
-      #password env_data["mysql"]["web_password"]
       database_name db_table_privileges[0]
       table db_table_privileges[1]
       privileges db_table_privileges[2]
@@ -122,7 +121,6 @@ if node.chef_environment == "dev"
   ].each do |db_table_privileges|
     mysql_database_user env_data["mysql"]["graph_user"] do
       connection mysql_connection_info
-      #password  env_data["mysql"]["graph_password"]
       database_name db_table_privileges[0]
       table db_table_privileges[1]
       privileges db_table_privileges[2]
@@ -138,7 +136,6 @@ if node.chef_environment == "dev"
   ].each do |db_table_privileges|
     mysql_database_user env_data["mysql"]["celery_user"] do
       connection mysql_connection_info
-      #password  env_data["mysql"]["celery_password"]
       database_name db_table_privileges[0]
       table db_table_privileges[1]
       privileges db_table_privileges[2]
@@ -170,7 +167,6 @@ if node.chef_environment == "dev"
   ].each do |db_table_privileges|
     mysql_database_user env_data["mysql"]["leaves_user"] do
       connection mysql_connection_info
-      #password  env_data["mysql"]["leaves_password"]
       database_name db_table_privileges[0]
       table db_table_privileges[1]
       privileges db_table_privileges[2]
