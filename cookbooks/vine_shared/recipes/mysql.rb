@@ -6,9 +6,8 @@ if node.chef_environment == "dev"
     action :create
   end
   
-  # dump, drop and recreate the databases
-  [env_data["mysql"]["main_name"],
-   env_data["mysql"]["celery_name"]
+  # dump or prepare to initialize the main vine database
+  [env_data["mysql"]["main_name"]
   ].each do |db_name|
     execute "dump database #{db_name}" do
       command "mysqldump --no-create-info -h #{env_data["mysql"]["host"]} -u root -p#{env_data["mysql"]["root_password"]} #{db_name} > #{node['vine_shared']['mysql_dir']}/#{db_name}.sql"
@@ -24,6 +23,12 @@ if node.chef_environment == "dev"
       source "init_#{db_name}.sql"
       action :create_if_missing
     end
+  end
+  
+  # drop and recreate both databases
+  [env_data["mysql"]["main_name"],
+   env_data["mysql"]["celery_name"]
+  ].each do |db_name|
     mysql_database db_name do
       connection mysql_connection_info
       action :drop
@@ -67,9 +72,8 @@ if node.chef_environment == "dev"
     end
   end
   
-  # import the database dumps
-  [env_data["mysql"]["main_name"],
-   env_data["mysql"]["celery_name"]
+  # import the main vine database dump
+  [env_data["mysql"]["main_name"]
   ].each do |db_name|
     execute "import databse #{db_name}" do
       command "mysql -h #{env_data["mysql"]["host"]} -u root -p#{env_data["mysql"]["root_password"]} #{db_name} < #{node['vine_shared']['mysql_dir']}/#{db_name}.sql"
