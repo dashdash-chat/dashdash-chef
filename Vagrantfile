@@ -18,7 +18,8 @@ Vagrant::Config.run do |config|
     chef.node_name = "dev_all"
     chef.environment = "dev"
     chef.run_list = [
-      "role[ejabberd]"
+      "role[ejabberd]",
+      "role[web]"
     ]
   end
   
