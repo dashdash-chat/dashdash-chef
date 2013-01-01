@@ -42,7 +42,13 @@ service "ejabberd" do
   stop_command    "ejabberdctl stop"
   status_command  "ejabberdctl status"
   restart_command "ejabberdctl restart"
-  reload_command  "ejabberdctl restart"
+  supports ({
+    :start   => true,
+    :stop    => true,
+    :status  => true,
+    :restart => true,
+    :reload  => false
+  })
   action :start
 end
 
