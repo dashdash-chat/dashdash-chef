@@ -8,10 +8,11 @@
   "default_attributes": {
     "omnibus_updater": { "version": "10.16.4" },
     "dirs": {
-      "log":    "/vagrant/logs_dir",
+      "log":    "/vagrant/log_dir",
       "source": "/vagrant/source_dir",
       "ssl":    "/home/vagrant/ssl"
-    }
+    },
+    "nginx": {"log_dir": "/vagrant/log_dir/nginx"}
   },
   "override_attributes": {
   }

@@ -2,4 +2,5 @@
 .rake_test_cache
 .chef
 .vagrant
+log_dir
 source_dir

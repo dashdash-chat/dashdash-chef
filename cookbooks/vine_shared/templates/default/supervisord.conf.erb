@@ -25,7 +25,3 @@ supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
 
 [supervisorctl]
 serverurl=unix:///tmp/supervisor.sock ; use unix:// schem for a unix sockets.
-
-#[include]
-# Uncomment this line for celeryd for Python
-;files=celeryd.conf
