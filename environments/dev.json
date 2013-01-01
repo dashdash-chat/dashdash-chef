@@ -7,8 +7,11 @@
   "chef_type": "environment",
   "default_attributes": {
     "omnibus_updater": { "version": "10.16.4" },
-    "source_dir": "/vagrant/source_dir",
-    "ssl_dir": "/home/vagrant/ssl"
+    "dirs": {
+      "log":    "/vagrant/logs_dir",
+      "source": "/vagrant/source_dir",
+      "ssl":    "/home/vagrant/ssl"
+    }
   },
   "override_attributes": {
   }

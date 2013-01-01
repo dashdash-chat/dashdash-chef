@@ -8,6 +8,27 @@
 #
 env_data = data_bag_item("dev_data", "dev_data")
 
+# Make sure our directories exist
+["#{node['dirs']['log']}",
+ "#{node['dirs']['source']}"
+].each do |dir|
+  directory dir do
+    mode 0644
+    owner env_data["server"]["user"]
+    group env_data["server"]["user"]
+    recursive true
+    action :create
+  end
+end
+directory node['dirs']['ssl'] do
+  mode 0400
+  owner root
+  group root
+  recursive true
+  action :create
+end
+
+# Prepare /etc/hosts
 if node.chef_environment == "dev"
   ruby_block "append entry to /etc/hosts" do
     block do
@@ -16,6 +37,19 @@ if node.chef_environment == "dev"
       file.write_file
     end
   end
+end
+
+# Set up the basic supervisor file, although someone else will run it
+template "supervisord.conf" do
+  path "/etc/supervisor/supervisord.conf"
+  source "supervisord.conf.erb"
+  owner "root"
+  group "root"
+  mode 0644
+  variables ({
+    :log_dir => "#{node['dirs']['log']}/supervisord",
+    :env_data => env_data
+  })
 end
 
 include_recipe "vine_shared::mysql"
