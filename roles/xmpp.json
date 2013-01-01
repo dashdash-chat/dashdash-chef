@@ -9,7 +9,8 @@
   "chef_type": "role",
   "run_list": [
     "role[base]",
-    "role[python]"
+    "role[python]",
+    "recipe[vine_xmpp]"
   ],
   "env_run_lists": {
   }
