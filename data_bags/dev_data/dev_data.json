@@ -64,7 +64,8 @@
   "xmpp": {
     "default_password": "dirj8owp2og3mob6yeg2",
     "employee_users": ["lehrblogger"],
-    "admin_users": ["admin1", "admin2"]
+    "admin_users": ["admin1", "admin2"],
+    "admin_password": "knoind3awp7av4ror2wi"
   },
   "twilio": {
     "watched_usernames": [],

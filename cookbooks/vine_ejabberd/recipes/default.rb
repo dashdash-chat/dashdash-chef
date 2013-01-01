@@ -36,9 +36,14 @@ execute "./configure, make, and install ejabberd" do
   cwd "#{node['vine_ejabberd']['ejabberd_repo_dir']}/src"
   action :run
 end
-execute "start ejabberd" do
-  command "sudo ejabberdctl start"
-  action :run
+service "ejabberd" do
+  service_name    "ejabberd"
+  start_command   "ejabberdctl start"
+  stop_command    "ejabberdctl stop"
+  status_command  "ejabberdctl status"
+  restart_command "ejabberdctl restart"
+  reload_command  "ejabberdctl restart"
+  action :start
 end
 
 # Download and install the modules, and restart ejabberd
@@ -94,3 +99,34 @@ template "ejabberd.cfg" do
   notifies :restart, "service[ejabberd]", :immediately
 end
 
+# Create the admin and xmlrpc users
+test = env_data["xmpp"]["admin_users"].map {|admin_user|
+  [admin_user, env_data["xmpp"]["admin_password"]]
+}.push(
+  [env_data["xmlrpc"]["leaves_user"], env_data["xmlrpc"]["leaves_password"]],
+  [env_data["xmlrpc"]["graph_user"], env_data["xmlrpc"]["graph_password"]],
+  [env_data["xmlrpc"]["web_user"], env_data["xmlrpc"]["web_password"]]
+).each do |username_password|
+  vine_ejabberd_ctl "ctl" do
+    provider "vine_ejabberd_ejabberdctl"
+    localuser username_password[0]
+    localserver env_data["server"]["domain"]
+    password username_password[1]
+    action :register
+    subscribes :restart, resources("service[ejabberd]"), :delayed
+  end
+end
+env_data["xmpp"]["admin_users"].each do |admin_user|
+  vine_ejabberd_ctl "ctl" do
+    provider "vine_ejabberd_ejabberdctl"
+    localuser admin_user
+    localserver env_data["server"]["domain"]
+    user env_data["leaves"]["xmpp_user"]
+    server "#{env_data["leaves"]["xmpp_user"]}.#{env_data["server"]["domain"]}"
+    nick "Leaf"
+    group "Admin"
+    subs "both"
+    action :add_rosteritem
+    subscribes :restart, resources("service[ejabberd]"), :delayed
+  end
+end
