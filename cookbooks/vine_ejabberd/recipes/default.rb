@@ -99,7 +99,7 @@ template "ejabberd.cfg" do
   notifies :restart, "service[ejabberd]", :immediately
 end
 
-# Create the admin and xmlrpc users
+# Create the admin and xmlrpc users, but retry if ejabberd hasn't restarted yet
 test = env_data["xmpp"]["admin_users"].map {|admin_user|
   [admin_user, env_data["xmpp"]["admin_password"]]
 }.push(
@@ -113,7 +113,6 @@ test = env_data["xmpp"]["admin_users"].map {|admin_user|
     localserver env_data["server"]["domain"]
     password username_password[1]
     action :register
-    subscribes :restart, resources("service[ejabberd]"), :delayed
   end
 end
 env_data["xmpp"]["admin_users"].each do |admin_user|
@@ -127,6 +126,5 @@ env_data["xmpp"]["admin_users"].each do |admin_user|
     group "Admin"
     subs "both"
     action :add_rosteritem
-    subscribes :restart, resources("service[ejabberd]"), :delayed
   end
 end
