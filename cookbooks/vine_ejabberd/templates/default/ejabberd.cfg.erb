@@ -40,8 +40,7 @@
 %% 4: Info
 %% 5: Debug
 %%
-{loglevel, 5}.
-
+{loglevel, <% if @env_data['flask']['debug'] %>5<% else %>4<% end %>}.
 
 %%%.   ================
 %%%'   SERVED HOSTNAMES
@@ -50,7 +49,7 @@
 %% You can define one or several, for example:
 %% {hosts, ["example.net", "example.com", "example.org"]}.
 %%
-{hosts, ["dev.vine.im"]}.
+{hosts, ["<%= @env_data['server']['domain'] %>"]}.
 %%
 %% route_subdomains: Delegate subdomains to other XMPP servers.
 %% For example, if this ejabberd serves example.org and you want
@@ -73,7 +72,7 @@
 			%% certificate, specify the full path to the
 			%% file and uncomment this line:
 			%%
-			{certfile, "/vagrant/xmpp-env/xmpp/shared/vinessl_ejabberd.crt"}, starttls,
+			{certfile, "<%= node['ssl_dir'] %>/ssl_both.crt"}, starttls,
 			{access, c2s},
 			{shaper, c2s_shaper},
 			{max_stanza_size, 65536}
@@ -98,8 +97,8 @@
   %% ejabberd_service: Interact with external components (transports, ...)
   %%
   {5237, ejabberd_service, [
-  			    {hosts, ["leaves.dev.vine.im"],
-			    	[{password, "is3joic8vorn8uf4ge4o"}]
+  			    {hosts, ["<%= @env_data['leaves']['domain_prefix'] %>.<%= @env_data['server']['domain'] %>"],
+			    	[{password, "<%= @env_data['leaves']['secret'] %>"}]
   			    }
   ]},
   %%
@@ -107,7 +106,7 @@
   %%
   %%{{3478, udp}, ejabberd_stun, []},
   {5281, ejabberd_http, [
-			 {certfile, "/vagrant/xmpp-env/xmpp/shared/vinessl_ejabberd.crt"}, tls,
+			 {certfile, "<%= node['ssl_dir'] %>/ssl_both.crt"}, tls,
 			 http_bind,
  			 http_poll,
 			 web_admin
@@ -173,8 +172,9 @@
 %% The 'admin' ACL grants administrative privileges to XMPP accounts.
 %% You can put here as many accounts as you want.
 %%
-{acl, admin, {user, "admin1", "dev.vine.im"}}.
-{acl, admin, {user, "admin2", "dev.vine.im"}}.
+<% for @admin_user in @env_data['xmpp']['admin_users'] %>
+    {acl, admin, {user, "<%= @admin_user %>", "<%= @env_data['server']['domain'] %>"}}.
+<% end %>
 %%
 %% Blocked users
 %%
@@ -188,10 +188,10 @@
 %%
 %% Vine access control lists
 %%
-{acl, server_only, {user, "", "dev.vine.im"}}.
-{acl, leaf_components, {server, "leaves.dev.vine.im"}}.
-{acl, leaf_users, {user, "_leaves", "dev.vine.im"}}.
-{acl, web_users, {user, "_web", "dev.vine.im"}}.
+{acl, server_only, {user, "", "<%= @env_data['server']['domain'] %>"}}.
+{acl, leaf_components, {server, "<%= @env_data['leaves']['domain_prefix'] %>.<%= @env_data['server']['domain'] %>"}}.
+{acl, leaf_users, {user, "<%= @env_data['xmlrpc']['leaves_user'] %>", "<%= @env_data['server']['domain'] %>"}}.
+{acl, web_users, {user, "<%= @env_data['xmlrpc']['web_user'] %>", "<%= @env_data['server']['domain'] %>"}}.
 
 %%%.   ============
 %%%'   ACCESS RULES
@@ -259,7 +259,7 @@
   {mod_caps,      []},
   {mod_configure, []}, % requires mod_adhoc
   {mod_disco,     []},
-  %%{mod_echo,    [{host, "echo.dev.vine.im"}]},
+  %%{mod_echo,    [{host, "echo.<%= @env_data['server']['domain'] %>"}]},
   {mod_http_bind, []},
   %%{mod_http_fileserver, [
   %%                       {docroot, "/var/www"},

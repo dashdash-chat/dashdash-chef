@@ -7,6 +7,9 @@ Vagrant::Config.run do |config|
   
   config.vm.forward_port 80,80
   config.vm.forward_port 443,443
+  config.vm.forward_port 5222, 5222
+  config.vm.forward_port 5237, 5237
+  config.vm.forward_port 5281, 5281
   
   config.vm.provision :chef_client do |chef|
     chef.chef_server_url = "https://api.opscode.com/organizations/vine"

@@ -10,7 +10,8 @@
 env_data = data_bag_item("dev_data", "dev_data")
 
 # Make sure our directories exist
-["#{node['source_dir']}"
+["#{node['source_dir']}",
+ "#{node['ssl_dir']}"
 ].each do |dir|
   directory dir do
     mode 0644
@@ -56,7 +57,7 @@ end
     action :run
   end
   execute "install #{module_name} module for ejabberd" do
-    command "cp ebin/#{module_name}.beam #{node['vine_ejabberd']['ejabberd_dir']}/ebin/"
+    command "cp ebin/#{module_name}.beam #{node['vine_ejabberd']['ejabberd_lib_dir']}/ebin/"
     cwd "#{node['vine_ejabberd']['modules_repo_dir']}/#{module_name}/trunk"
     action :run
   end
@@ -69,12 +70,27 @@ bash "install_xmlrpc_erlang" do
   cwd "/tmp"
   code <<-EOH
     tar -xzvf xmlrpc-1.13-ipr2.tgz
-    (cd xmlrpc-1.13/src && make && cp ../ebin/*.beam #{node['vine_ejabberd']['ejabberd_dir']}/ebin/)
+    (cd xmlrpc-1.13/src && make && cp ../ebin/*.beam #{node['vine_ejabberd']['ejabberd_lib_dir']}/ebin/)
   EOH
   action :nothing
 end
-execute "restart ejabberd" do
-  command "sudo ejabberdctl restart"
-  action :run
+
+# Render the SSL and ejabberd.cfg templates, and restart ejabberd
+template "ssl_both.crt" do
+  path "#{node['ssl_dir']}/ssl_both.crt"
+  source "ssl_both.crt.erb"
+  owner "root"
+  group "root"
+  variables ({
+    :ssl_crt => env_data["server"]["web_ssl_crt"],
+    :ssl_key => env_data["server"]["web_ssl_key"]
+  })
+  mode 0600
+end
+template "ejabberd.cfg" do
+  path "#{node['vine_ejabberd']['ejabberd_cfg_dir']}/ejabberd.cfg"
+  source "ejabberd.cfg.erb"
+  variables :env_data => env_data
+  notifies :restart, "service[ejabberd]", :immediately
 end
 
