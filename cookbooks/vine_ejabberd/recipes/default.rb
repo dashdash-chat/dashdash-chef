@@ -10,8 +10,8 @@
 env_data = data_bag_item("dev_data", "dev_data")
 
 # Make sure our directories exist
-["#{node['source_dir']}",
- "#{node['ssl_dir']}"
+["#{node['dirs']['source']}",
+ "#{node['dirs']['ssl']}"
 ].each do |dir|
   directory dir do
     mode 0644
