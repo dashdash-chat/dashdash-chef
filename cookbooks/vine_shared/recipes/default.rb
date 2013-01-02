@@ -77,7 +77,7 @@ template "supervisord.conf" do
     :log_dir => "#{node['vine_shared']['supervisord_log_dir']}",
     :env_data => env_data
   })
-  notifies :restart, 'service[supervisor]'
+  # No need to start supervisord yet, since there are no programs
 end
 
 # Set up MySQL, which both vine-web and vine-xmpp need for state
