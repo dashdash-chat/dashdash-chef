@@ -83,6 +83,22 @@ end
 # Set up MySQL, which both vine-web and vine-xmpp need for state
 include_recipe "vine_shared::mysql"
 
+# Make the SSH key for github access and create the wrapper script
+template "#{node['dirs']['ssl']}/deploy_key" do
+  source "deploy_key.erb"
+  owner "root"
+  group "root"
+  mode 0600
+  variables :deploy_key => env_data["server"]["deploy_key"] 
+end
+template "#{node['dirs']['ssl']}/ssh_wrapper.sh" do
+  source "ssh_wrapper.sh.erb"
+  owner "root"
+  group "root"
+  mode 0700
+  variables :deploy_key_path => "#{node['dirs']['ssl']}/deploy_key"
+end
+
 # Add commonly-used commands to the bash history (env_data['mysql']['root_password'] is nil in prod, which works perfectly)
 ["mysql -u root -p#{env_data['mysql']['root_password']} -h #{env_data['mysql']['host']} -D #{env_data['mysql']['main_name']}",
  "tail -f #{node['dirs']['log']}/"
