@@ -12,7 +12,6 @@
     "recipe[vine_shared::mysql_root_password]",
     "recipe[mysql::server]",
     "recipe[database::mysql]",
-    "recipe[supervisord]",
     "recipe[nginx]",
     "recipe[vine_shared]"
   ],

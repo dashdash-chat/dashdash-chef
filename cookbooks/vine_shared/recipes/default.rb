@@ -66,7 +66,8 @@ template "nginx.conf" do
   notifies :reload, 'service[nginx]'
 end
 
-# Set up the basic supervisor file
+# Define the supervisor service with a basic config file
+package "supervisor"
 template "supervisord.conf" do
   path "/etc/supervisor/supervisord.conf"
   source "supervisord.conf.erb"
@@ -77,7 +78,22 @@ template "supervisord.conf" do
     :log_dir => "#{node['vine_shared']['supervisord_log_dir']}",
     :env_data => env_data
   })
-  # No need to start supervisord yet, since there are no programs
+end
+service "supervisor" do
+  service_name    "supervisor"
+  start_command   "/etc/init.d/supervisor start"
+  stop_command    "/etc/init.d/supervisor stop"
+  status_command  "/etc/init.d/supervisor status"
+  restart_command "/etc/init.d/supervisor restart"
+  reload_command  "supervisorctl reread && supervisorctl update"
+  supports ({
+    :start   => true,
+    :stop    => true,
+    :status  => true,
+    :restart => true,
+    :reload  => true
+  })
+  action :start
 end
 
 # Set up MySQL, which both vine-web and vine-xmpp need for state
