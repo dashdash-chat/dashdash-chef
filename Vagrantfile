@@ -19,6 +19,7 @@ Vagrant::Config.run do |config|
     chef.environment = "dev"
     chef.run_list = [
       "role[ejabberd]",
+      "role[xmpp]",
       "role[web]"
     ]
   end
