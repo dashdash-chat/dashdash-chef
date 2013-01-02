@@ -127,7 +127,7 @@ env_data["xmpp"]["admin_users"].each do |admin_user|
     localuser admin_user
     localserver env_data["server"]["domain"]
     user env_data["leaves"]["xmpp_user"]
-    server "#{env_data["leaves"]["xmpp_user"]}.#{env_data["server"]["domain"]}"
+    server "#{env_data["leaves"]["domain_prefix"]}.#{env_data["server"]["domain"]}"
     nick "Leaf"
     group "Admin"
     subs "both"
