@@ -25,3 +25,6 @@ supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
 
 [supervisorctl]
 serverurl=unix:///tmp/supervisor.sock ; use unix:// schem for a unix sockets.
+
+[include]
+files = conf.d/supervisord_*.conf
