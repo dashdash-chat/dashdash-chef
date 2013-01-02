@@ -11,3 +11,4 @@ depends "database", "= 1.3.9"  #NOTE this is my local version bump of the databa
 depends "nginx", "= 1.1.2"
 depends "supervisord", "= 0.1.0"
 depends "vine_ejabberd", "~> 0.1.0"
+depends "deploy_wrapper", "= 0.0.2"
