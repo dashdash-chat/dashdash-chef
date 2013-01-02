@@ -80,6 +80,7 @@ template "supervisord.conf" do
   notifies :restart, 'service[supervisor]'
 end
 
+# Set up MySQL, which both vine-web and vine-xmpp need for state
 include_recipe "vine_shared::mysql"
 
 # Add commonly-used commands to the bash history (env_data['mysql']['root_password'] is nil in prod, which works perfectly)
