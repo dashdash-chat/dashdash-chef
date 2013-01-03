@@ -129,7 +129,7 @@ env_data["xmpp"]["admin_users"].each do |admin_user|
     user env_data["leaves"]["xmpp_user"]
     server "#{env_data["leaves"]["domain_prefix"]}.#{env_data["server"]["domain"]}"
     nick "Leaf"
-    group "Admin"
+    group "Vine-#{node.chef_environment}"
     subs "both"
     action :add_rosteritem
   end
