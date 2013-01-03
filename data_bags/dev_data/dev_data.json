@@ -52,7 +52,6 @@
     "xmpp_user": "leaf",
     "domain_prefix": "leaves",
     "secret": "is3joic8vorn8uf4ge4o",
-    "num_leaves": 3,
     "max_leaves": 10
   },
   "xmlrpc": {
