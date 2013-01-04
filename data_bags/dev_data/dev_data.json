@@ -17,7 +17,8 @@
     "xmlrpc": 4560
   },
   "supervisor": {
-    "user": "admin",
+    "port": "localhost:9001",
+    "username": "admin",
     "password": "password"
   },
   "mysql": {

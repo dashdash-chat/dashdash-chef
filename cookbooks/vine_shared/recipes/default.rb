@@ -10,9 +10,7 @@ env_data = data_bag_item("dev_data", "dev_data")
 
 # Make sure our directories exist
 [node['dirs']['log'],
- node['dirs']['source'],
- node['dirs']['ssl'],
- node['vine_shared']['supervisord_log_dir']
+ node['dirs']['source']
 ].each do |dir|
   directory dir do
     mode 0644
@@ -66,35 +64,11 @@ template "nginx.conf" do
   notifies :reload, 'service[nginx]'
 end
 
-# Define the supervisor service with a basic config file
-package "supervisor"
-template "supervisord.conf" do
-  path "/etc/supervisor/supervisord.conf"
-  source "supervisord.conf.erb"
-  owner "root"
-  group "root"
-  mode 0644
-  variables ({
-    :log_dir => "#{node['vine_shared']['supervisord_log_dir']}",
-    :env_data => env_data
-  })
-end
-service "supervisor" do
-  service_name    "supervisor"
-  start_command   "/etc/init.d/supervisor start"
-  stop_command    "/etc/init.d/supervisor stop"
-  status_command  "/etc/init.d/supervisor status"
-  restart_command "/etc/init.d/supervisor restart"
-  reload_command  "supervisorctl reread && supervisorctl update"
-  supports ({
-    :start   => true,
-    :stop    => true,
-    :status  => true,
-    :restart => true,
-    :reload  => true
-  })
-  action :start
-end
+# Set up supervisor and it's internal admin page
+node.set['supervisor']['inet_port'] = env_data['supervisor']['port']
+node.set['supervisor']['inet_username'] = env_data['supervisor']['username']
+node.set['supervisor']['inet_password'] = env_data['supervisor']['password']
+include_recipe "supervisor"
 
 # Set up MySQL, which both vine-web and vine-xmpp need for state
 include_recipe "vine_shared::mysql"
