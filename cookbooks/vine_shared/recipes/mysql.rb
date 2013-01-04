@@ -2,6 +2,9 @@ env_data = data_bag_item("dev_data", "dev_data")
 if node.chef_environment == "dev"
   mysql_connection_info = {:host => env_data["mysql"]["host"], :username => 'root', :password => env_data["mysql"]["root_password"]}
   directory node['vine_shared']['mysql_dir'] do
+    owner "root"
+    group "root"
+    mode 00755
     recursive true
     action :create
   end
@@ -19,7 +22,7 @@ if node.chef_environment == "dev"
     cookbook_file "#{node['vine_shared']['mysql_dir']}/#{db_name}.sql" do
       owner env_data["server"]["user"]
       group env_data["server"]["group"]
-      mode 0444
+      mode 00444
       source "init_#{db_name}.sql"
       action :create_if_missing
     end
@@ -61,7 +64,7 @@ if node.chef_environment == "dev"
       source "#{table_name}.sql"
       owner env_data["server"]["user"]
       group env_data["server"]["group"]
-      mode 0444
+      mode 00444
       action :create
     end
     mysql_database "create table #{table_name}" do

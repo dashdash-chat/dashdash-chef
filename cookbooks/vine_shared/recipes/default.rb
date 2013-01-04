@@ -13,17 +13,17 @@ env_data = data_bag_item("dev_data", "dev_data")
  node['dirs']['source']
 ].each do |dir|
   directory dir do
-    mode 0644
     owner env_data["server"]["user"]
-    group env_data["server"]["user"]
+    group env_data["server"]["group"]
+    mode 00755
     recursive true
     action :create
   end
 end
 directory node['dirs']['ssl'] do
-  mode 0400
   owner "root"
   group "root"
+  mode 00500
   recursive true
   action :create
 end
@@ -49,7 +49,7 @@ end
     owner "root"
     group "root"
     variables :ssl_string => env_data["server"]["web_ssl_#{type}"]
-    mode 0644
+    mode 00644
   end
 end
 
@@ -59,7 +59,7 @@ template "nginx.conf" do
   source "nginx.conf.erb"
   owner "root"
   group "root"
-  mode 0644
+  mode 00644
   variables :env_data => env_data
   notifies :reload, 'service[nginx]'
 end

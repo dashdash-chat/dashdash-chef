@@ -14,9 +14,9 @@ env_data = data_bag_item("dev_data", "dev_data")
  "#{node['dirs']['ssl']}"
 ].each do |dir|
   directory dir do
-    mode 0644
     owner env_data["server"]["user"]
-    group env_data["server"]["user"]
+    group env_data["server"]["group"]
+    mode 0644
     recursive true
     action :create
   end
