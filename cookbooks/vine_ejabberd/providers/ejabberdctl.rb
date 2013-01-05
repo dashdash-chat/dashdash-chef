@@ -14,3 +14,12 @@ action :add_rosteritem do
     retry_delay node['vine_ejabberd']['ejabberdctl']['retry_delay']
   end
 end
+
+action :load do
+  execute "load mnesia dump #{new_resource.file}" do
+    command "ejabberdctl load #{new_resource.file}"
+    retries node['vine_ejabberd']['ejabberdctl']['retries']
+    retry_delay node['vine_ejabberd']['ejabberdctl']['retry_delay']
+  end
+end
+

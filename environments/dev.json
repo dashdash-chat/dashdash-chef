@@ -10,10 +10,12 @@
     "dirs": {
       "source": "/vagrant/source_dir",
       "log":    "/home/vagrant/log_dir",
+      "other":  "/home/vagrant/other",
       "ssl":    "/home/vagrant/ssl"
     },
     "supervisor": {"log_dir": "/home/vagrant/log_dir/supervisor"},
-    "nginx":      {"log_dir": "/home/vagrant/log_dir/nginx"}
+    "nginx":      {"log_dir": "/home/vagrant/log_dir/nginx"},
+    "load_dumps": true
   },
   "override_attributes": {
   }

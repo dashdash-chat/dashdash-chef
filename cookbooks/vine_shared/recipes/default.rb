@@ -10,7 +10,8 @@ env_data = data_bag_item("dev_data", "dev_data")
 
 # Make sure our directories exist
 [node['dirs']['log'],
- node['dirs']['source']
+ node['dirs']['source'],
+ node['dirs']['other']
 ].each do |dir|
   directory dir do
     owner env_data["server"]["user"]
@@ -72,6 +73,7 @@ node.set['supervisor']['inet_port'] = env_data['supervisor']['port']
 node.set['supervisor']['inet_username'] = env_data['supervisor']['username']
 node.set['supervisor']['inet_password'] = env_data['supervisor']['password']
 include_recipe "supervisor"
+#TODO how to reload on new run to re-establish mysql conn?
 
 # Add commonly-used commands to the bash history (env_data['mysql']['root_password'] is nil in prod, which works perfectly)
 ["mysql -u root -p#{env_data['mysql']['root_password']} -h #{env_data['mysql']['host']} -D #{env_data['mysql']['main_name']}",

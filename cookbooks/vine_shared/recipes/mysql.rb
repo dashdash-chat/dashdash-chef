@@ -75,12 +75,28 @@ if node.chef_environment == "dev"
     end
   end
   
-  # import the main vine database dump
-  [env_data["mysql"]["main_name"]
-  ].each do |db_name|
-    execute "import databse #{db_name}" do
-      command "mysql -h #{env_data["mysql"]["host"]} -u root -p#{env_data["mysql"]["root_password"]} #{db_name} < #{node['vine_shared']['mysql_dir']}/#{db_name}.sql"
+  # import the initial databases
+  if node['load_dumps']
+    # either a dump from our manually-exported files
+    cookbook_file "#{node['dirs']['other']}/mysql_dump.sql" do
+      owner env_data["server"]["user"]
+      group env_data["server"]["group"]
+      mode 00444
+      source "mysql_dump.sql"
+      action :create
+    end
+    execute "import mysql vine databse" do
+      command "mysql -h #{env_data["mysql"]["host"]} -u root -p#{env_data["mysql"]["root_password"]} vine < #{node['dirs']['other']}/mysql_dump.sql"
       action :run
+    end
+  else
+    # or whatever database(s) we had before
+    [env_data["mysql"]["main_name"]
+    ].each do |db_name|
+      execute "import databse #{db_name}" do
+        command "mysql -h #{env_data["mysql"]["host"]} -u root -p#{env_data["mysql"]["root_password"]} #{db_name} < #{node['vine_shared']['mysql_dir']}/#{db_name}.sql"
+        action :run
+      end
     end
   end
   

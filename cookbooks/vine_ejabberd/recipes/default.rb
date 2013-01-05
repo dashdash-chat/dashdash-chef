@@ -10,8 +10,9 @@
 env_data = data_bag_item("dev_data", "dev_data")
 
 # Make sure our directories exist
-["#{node['dirs']['source']}",
- "#{node['dirs']['ssl']}"
+[node['dirs']['source'],
+ node['dirs']['other'],
+ node['dirs']['ssl'],
 ].each do |dir|
   directory dir do
     owner env_data["server"]["user"]
@@ -105,22 +106,40 @@ template "ejabberd.cfg" do
   notifies :restart, "service[ejabberd]", :immediately
 end
 
-# Create the admin and xmlrpc users, but retry if ejabberd hasn't restarted yet
-test = env_data["xmpp"]["admin_users"].map {|admin_user|
-  [admin_user, env_data["xmpp"]["admin_password"]]
-}.push(
-  [env_data["xmlrpc"]["leaves_user"], env_data["xmlrpc"]["leaves_password"]],
-  [env_data["xmlrpc"]["graph_user"], env_data["xmlrpc"]["graph_password"]],
-  [env_data["xmlrpc"]["web_user"], env_data["xmlrpc"]["web_password"]]
-).each do |username_password|
+# Initialize the users
+if node['load_dumps']
+  # Either using a previous dump, relying on vine_shared::mysql to create it's own database
+  cookbook_file "#{node['dirs']['other']}/ejabberd_dump.erl" do
+    owner env_data["server"]["user"]
+    group env_data["server"]["group"]
+    mode 00444
+    source "ejabberd_dump.erl"
+    action :create
+  end
   vine_ejabberd_ctl "ctl" do
     provider "vine_ejabberd_ejabberdctl"
-    localuser username_password[0]
-    localserver env_data["server"]["domain"]
-    password username_password[1]
-    action :register
+    file "#{node['dirs']['other']}/ejabberd_dump.erl"
+    action :load
+  end
+else
+  # Or just the admin users that we definitely need
+  test = env_data["xmpp"]["admin_users"].map {|admin_user|
+    [admin_user, env_data["xmpp"]["admin_password"]]
+  }.push(
+    [env_data["xmlrpc"]["leaves_user"], env_data["xmlrpc"]["leaves_password"]],
+    [env_data["xmlrpc"]["graph_user"], env_data["xmlrpc"]["graph_password"]],
+    [env_data["xmlrpc"]["web_user"], env_data["xmlrpc"]["web_password"]]
+  ).each do |username_password|
+    vine_ejabberd_ctl "ctl" do
+      provider "vine_ejabberd_ejabberdctl"
+      localuser username_password[0]
+      localserver env_data["server"]["domain"]
+      password username_password[1]
+      action :register
+    end
   end
 end
+# Change the admin passwords anyway
 env_data["xmpp"]["admin_users"].each do |admin_user|
   vine_ejabberd_ctl "ctl" do
     provider "vine_ejabberd_ejabberdctl"
