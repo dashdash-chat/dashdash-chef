@@ -75,7 +75,8 @@ include_recipe "supervisor"
 
 # Add commonly-used commands to the bash history (env_data['mysql']['root_password'] is nil in prod, which works perfectly)
 ["mysql -u root -p#{env_data['mysql']['root_password']} -h #{env_data['mysql']['host']} -D #{env_data['mysql']['main_name']}",
- "tail -f #{node['dirs']['log']}/"
+ "tail -f #{node['dirs']['log']}/",
+ "cd #{node['vine_web']['web_env_dir']} && source bin/activate && cd #{node['vine_web']['web_repo_dir']}"
 ].each do |command|
   ruby_block "append line to history" do
     block do
