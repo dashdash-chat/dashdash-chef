@@ -64,14 +64,14 @@ template "nginx.conf" do
   notifies :reload, 'service[nginx]'
 end
 
+# Set up MySQL, which both vine-web and vine-xmpp need for state
+include_recipe "vine_shared::mysql"
+
 # Set up supervisor and it's internal admin page
 node.set['supervisor']['inet_port'] = env_data['supervisor']['port']
 node.set['supervisor']['inet_username'] = env_data['supervisor']['username']
 node.set['supervisor']['inet_password'] = env_data['supervisor']['password']
 include_recipe "supervisor"
-
-# Set up MySQL, which both vine-web and vine-xmpp need for state
-include_recipe "vine_shared::mysql"
 
 # Add commonly-used commands to the bash history (env_data['mysql']['root_password'] is nil in prod, which works perfectly)
 ["mysql -u root -p#{env_data['mysql']['root_password']} -h #{env_data['mysql']['host']} -D #{env_data['mysql']['main_name']}",
