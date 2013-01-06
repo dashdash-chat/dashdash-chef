@@ -58,7 +58,8 @@ if node.chef_environment == "dev"
    'recipients',
    'blocks',
    'artificial_follows',
-   'twitter_follows'
+   'twitter_follows',
+   'foursquare_friends'
   ].each do |table_name|
     cookbook_file "#{node['vine_shared']['mysql_dir']}/#{table_name}.sql" do
       source "#{table_name}.sql"
@@ -140,6 +141,7 @@ if node.chef_environment == "dev"
    [env_data["mysql"]["main_name"], 'blocks',             [:select]],
    [env_data["mysql"]["main_name"], 'artificial_follows', [:select]],
    [env_data["mysql"]["main_name"], 'twitter_follows',    [:select]],
+   [env_data["mysql"]["main_name"], 'foursquare_friends', [:select]],
    [env_data["mysql"]["main_name"], 'edges',              [:select]]
   ].each do |db_table_privileges|
     mysql_database_user env_data["mysql"]["graph_user"] do
@@ -153,9 +155,10 @@ if node.chef_environment == "dev"
   end
   
   # grant privileges to the celery user
-  [[env_data["mysql"]["celery_name"], nil,             [:all]],  #NOTE this will replace 'nil' with the default of '*'
-   [env_data["mysql"]["main_name"], 'users',           [:select]],
-   [env_data["mysql"]["main_name"], 'twitter_follows', [:select, :update, :insert, :delete]]
+  [[env_data["mysql"]["celery_name"], nil,                [:all]],  #NOTE this will replace 'nil' with the default of '*'
+   [env_data["mysql"]["main_name"], 'users',              [:select]],
+   [env_data["mysql"]["main_name"], 'foursquare_friends', [:select, :insert]],
+   [env_data["mysql"]["main_name"], 'twitter_follows',    [:select, :update, :insert, :delete]]
   ].each do |db_table_privileges|
     mysql_database_user env_data["mysql"]["celery_user"] do
       connection mysql_connection_info

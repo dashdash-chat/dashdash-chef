@@ -8,6 +8,7 @@ CREATE TABLE users (
     UNIQUE KEY (twitter_id),
     twitter_token VARCHAR(200) DEFAULT NULL,
     twitter_secret VARCHAR(200) DEFAULT NULL,
+    foursquare_token VARCHAR(200) DEFAULT NULL,
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
     created TIMESTAMP DEFAULT NOW()
 ) ENGINE = InnoDB;

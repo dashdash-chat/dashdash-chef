@@ -45,6 +45,10 @@
     "consumer_key": "7MDE19OK3Vk3e6QMJ0Xow",
     "consumer_secret": "VcUyKhrSP27HcW1iLLU8yKLlcpmtqDFyVtMQ7Tk1Y"
   },
+  "foursquare": {
+    "client_id": "TPVMKMGRFFSESDMJUWRRQIRW5UGYO3TIQVSK4W0VYMK5L12L",
+    "client_secret": "ETPDQDEQB1QED0OI1TXXYXBU4INPEH50TFDAXCYC01DRH2XA"
+  },
   "flask": {
     "debug": true,
     "secret_key": "development key"
