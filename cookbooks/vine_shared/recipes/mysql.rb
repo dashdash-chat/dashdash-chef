@@ -13,7 +13,7 @@ if node.chef_environment == "dev"
   [env_data["mysql"]["main_name"]
   ].each do |db_name|
     execute "dump database #{db_name}" do
-      command "mysqldump --no-create-info -h #{env_data["mysql"]["host"]} -u root -p#{env_data["mysql"]["root_password"]} #{db_name} > #{node['vine_shared']['mysql_dir']}/#{db_name}.sql"
+      command "mysqldump --no-create-info --complete-insert -h #{env_data["mysql"]["host"]} -u root -p#{env_data["mysql"]["root_password"]} #{db_name} > #{node['vine_shared']['mysql_dir']}/#{db_name}.sql"
       #NOTE the --no-create-info flag, so we can try to re-populate our tables with the previous data
       action :run
       only_if {File.exists?("#{node['vine_shared']['mysql_dir']}/#{db_name}.sql")}

@@ -15,7 +15,7 @@
     },
     "supervisor": {"log_dir": "/home/vagrant/log_dir/supervisor"},
     "nginx":      {"log_dir": "/home/vagrant/log_dir/nginx"},
-    "load_dumps": true
+    "load_dumps": false
   },
   "override_attributes": {
   }
