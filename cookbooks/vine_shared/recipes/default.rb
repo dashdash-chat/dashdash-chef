@@ -79,7 +79,8 @@ include_recipe "supervisor"
 ["ps faux | grep",
  "mysql -u root -p#{env_data['mysql']['root_password']} -h #{env_data['mysql']['host']} -D #{env_data['mysql']['main_name']}",
  "tail -f -n 200 #{node['dirs']['log']}/",
- "cd #{node['vine_web']['web_env_dir']} && source bin/activate && cd #{node['vine_web']['web_repo_dir']}"
+ "cd #{node['vine_web']['web_env_dir']} && source bin/activate && cd #{node['vine_web']['web_repo_dir']}",
+ "cd #{node['vine_xmpp']['xmpp_env_dir']} && source bin/activate && cd #{node['vine_xmpp']['xmpp_repo_dir']}",
 ].each do |command|
   ruby_block "append line to history" do
     block do
