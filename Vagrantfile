@@ -2,8 +2,9 @@ Vagrant::Config.run do |config|
   
   config.vm.box = "opscode-ubuntu-12.04"
   config.vm.box_url = "https://opscode-vm.s3.amazonaws.com/vagrant/boxes/opscode-ubuntu-12.04.box"
-  config.vm.customize ["modifyvm", :id, "--memory", 2048]
   config.vm.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
+  config.vm.customize ["modifyvm", :id, "--memory", 2048]
+  config.vm.customize ["modifyvm", :id, "--cpus", 4]
   
   config.vm.forward_port 80,80
   config.vm.forward_port 443,443
