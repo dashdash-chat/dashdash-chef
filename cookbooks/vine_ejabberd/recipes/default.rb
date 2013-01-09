@@ -6,22 +6,7 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-
 env_data = data_bag_item("dev_data", "dev_data")
-
-# Make sure our directories exist
-[node['dirs']['source'],
- node['dirs']['other'],
- node['dirs']['ssl'],
-].each do |dir|
-  directory dir do
-    owner env_data["server"]["user"]
-    group env_data["server"]["group"]
-    mode 0644
-    recursive true
-    action :create
-  end
-end
 
 # Downdload and install ejabberd, then make sure it runs
 git "#{node['vine_ejabberd']['ejabberd_repo_dir']}" do

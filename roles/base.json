@@ -10,7 +10,8 @@
   "run_list": [
     "recipe[apt]",
     "recipe[omnibus_updater]",
-    "recipe[git]"
+    "recipe[git]",
+    "recipe[vine_shared::directories]"
   ],
   "env_run_lists": {
   }
