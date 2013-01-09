@@ -11,7 +11,7 @@
     "recipe[apt]",
     "recipe[omnibus_updater]",
     "recipe[git]",
-    "recipe[vine_shared::directories]"
+    "recipe[vine_shared::config]"
   ],
   "env_run_lists": {
   }
