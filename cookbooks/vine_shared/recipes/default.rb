@@ -55,6 +55,14 @@ include_recipe "supervisor"
 #TODO how to reload on new run to re-establish mysql conn?
 
 # Add commonly-used commands to the bash history (env_data['mysql']['root_password'] is nil in prod, which works perfectly)
+file "/home/#{env_data["server"]["user"]}/.bash_history" do
+  owner env_data["server"]["user"]
+  group env_data["server"]["group"]
+  mode 00755
+  content "history"
+  action :create
+  not_if {File.size( "/home/#{env_data["server"]["user"]}/.bash_history") > 0}
+end
 ["ps faux | grep",
  "mysql -u root -p#{env_data['mysql']['root_password']} -h #{env_data['mysql']['host']} -D #{env_data['mysql']['main_name']}",
  "tail -f -n 200 #{node['dirs']['log']}/",
