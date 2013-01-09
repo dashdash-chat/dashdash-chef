@@ -93,7 +93,7 @@ if node.chef_environment == "dev"
     # or whatever database(s) we had before
     [env_data["mysql"]["main_name"]
     ].each do |db_name|
-      execute "import databse #{db_name}" do
+      execute "import database #{db_name}" do
         command "mysql -h #{env_data["mysql"]["host"]} -u root -p#{env_data["mysql"]["root_password"]} #{db_name} < #{node['vine_shared']['mysql_dir']}/#{db_name}.sql"
         action :run
       end
