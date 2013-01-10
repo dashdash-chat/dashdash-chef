@@ -14,3 +14,6 @@ clear && knife cookbook upload vine_ejabberd -o cookbooks/  && time rvmsudo vagr
 
 knife data bag from file dev config.json --secret-file /Volumes/secret_keys/data_bags/dev_key
 knife data bag show dev config       -Fj --secret-file /Volumes/secret_keys/data_bags/dev_key > data_bags/dev/config.json
+
+knife data bag edit prod config --secret-file /Volumes/secret_keys/data_bags/prod_key
+knife data bag show prod config -Fj > data_bags/prod/config.json
