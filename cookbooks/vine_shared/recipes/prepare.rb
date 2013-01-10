@@ -59,3 +59,9 @@ end
     mode 00644
   end
 end
+
+# Pre-configure the root password on dev
+if node.chef_environment == 'dev'
+  node.set['mysql']['server_root_password'] = node.run_state['config']['mysql']['root_password']
+end
+

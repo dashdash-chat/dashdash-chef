@@ -9,7 +9,6 @@
   "chef_type": "role",
   "run_list": [
     "recipe[python]",
-    "recipe[vine_shared::mysql_root_password]",
     "recipe[nginx]",
     "recipe[vine_shared]"
   ],
