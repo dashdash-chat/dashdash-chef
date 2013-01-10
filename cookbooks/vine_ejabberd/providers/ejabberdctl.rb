@@ -22,4 +22,3 @@ action :load do
     retry_delay node['vine_ejabberd']['ejabberdctl']['retry_delay']
   end
 end
-
