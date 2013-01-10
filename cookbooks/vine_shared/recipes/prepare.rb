@@ -7,11 +7,11 @@
 # All rights reserved - Do Not Redistribute
 #
 # These things are needed by both vine_shared and vine_ejabberd, so the base role should run them first
-#
+
 # Load the config variables from the environment-specific data bag
 node.run_state['config'] = Chef::EncryptedDataBagItem.load(node.chef_environment, "config")
 file Chef::Config[:encrypted_data_bag_secret] do
-  action :delete  # no need to keep our secrets sitting on disk all in one place!
+  action :delete  # no need to keep our secret key sitting on disk!
 end
 
 # Make sure our directories exist
@@ -37,17 +37,6 @@ directory node['dirs']['ssl'] do
   not_if {File.exists?(node['dirs']['ssl'])}
 end
 
-# Prepare /etc/hosts
-if node.chef_environment == "dev"
-  ruby_block "append entry to /etc/hosts" do
-    block do
-      file = Chef::Util::FileEdit.new("/etc/hosts")
-      file.insert_line_if_no_match("/#{node.run_state['config']['domain']}/", "\n127.0.0.1\t#{node.run_state['config']['domain']}\n")
-      file.write_file
-    end
-  end
-end
-
 # Create the SSL certificate and key files (the leaf component needs these if it has it's own supervisor!)
 ['crt', 'key'].each do |type|
   template "#{node['dirs']['ssl']}/ssl_web.#{type}" do
@@ -59,8 +48,15 @@ end
   end
 end
 
-# Pre-configure the root password on dev
-if node.chef_environment == 'dev'
+# On dev, prepare etc hosts and the MySQL root password
+if node.chef_environment == "dev"
+  ruby_block "append entry to /etc/hosts" do
+    block do
+      file = Chef::Util::FileEdit.new("/etc/hosts")
+      file.insert_line_if_no_match("/#{node.run_state['config']['domain']}/", "\n127.0.0.1\t#{node.run_state['config']['domain']}\n")
+      file.write_file
+    end
+  end
+  
   node.set['mysql']['server_root_password'] = node.run_state['config']['mysql']['root_password']
 end
-

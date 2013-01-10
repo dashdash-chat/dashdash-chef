@@ -27,7 +27,7 @@ if node.chef_environment == "dev"
   ].each do |db_name|
     execute "dump database #{db_name}" do
       command "mysqldump --no-create-info --complete-insert -h #{node.run_state['config']['mysql']['host']} -u root -p#{node.run_state['config']['mysql']['root_password']} #{db_name} > #{node['vine_shared']['mysql_dir']}/#{db_name}.sql"
-      #NOTE the --no-create-info flag, so we can try to re-populate our tables with the previous data
+      #NOTE use the --no-create-info flag, so we can try to re-populate our tables with the previous data
       action :run
       only_if {File.exists?("#{node['vine_shared']['mysql_dir']}/#{db_name}.sql")}
       #NOTE only overwrite existing dumps, but if this is the first provision we want to use the init file
@@ -151,7 +151,7 @@ if node.chef_environment == "dev"
     end
   
     # grant privileges to the celery user
-    [[node.run_state['config']['mysql']['celery_name'], nil,             [:all]],  #NOTE this will replace 'nil' with the default of '*'
+    [[node.run_state['config']['mysql']['celery_name'], nil,             [:all]],  #NOTE it will replace 'nil' with the default of '*'
      [node.run_state['config']['mysql']['main_name'], 'users',           [:select]],
      [node.run_state['config']['mysql']['main_name'], 'twitter_follows', [:select, :update, :insert, :delete]]
     ].each do |db_table_privileges|
@@ -202,5 +202,7 @@ if node.chef_environment == "dev"
       sql "FLUSH PRIVILEGES"
       action :query
     end
+    
+    #TODO delete mysql dump files so they arent on disk?
   end
 end

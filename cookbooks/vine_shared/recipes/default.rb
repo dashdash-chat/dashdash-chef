@@ -25,14 +25,14 @@ node.set['supervisor']['inet_port']     = node.run_state['config']['supervisor']
 node.set['supervisor']['inet_username'] = node.run_state['config']['supervisor']['username']
 node.set['supervisor']['inet_password'] = node.run_state['config']['supervisor']['password']
 include_recipe "supervisor"
-#TODO how to reload on new run to re-establish mysql conn?
+#TODO how to reload on new run to re-establish mysql conn? supervisorctl restart all? test this in dashboard first!
 
 # Add commonly-used commands to the bash history (node.run_state['config']['mysql']['root_password'] is nil in prod, which works perfectly)
 file "/home/#{node.run_state['config']['user']}/.bash_history" do
   owner node.run_state['config']['user']
   group node.run_state['config']['group']
   mode 00755
-  content "history"
+  content "history"  # Chef::Util::FileEdit needs the file not to be blank
   action :create
   not_if {File.size( "/home/#{node.run_state['config']['user']}/.bash_history") > 0}
 end

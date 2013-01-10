@@ -6,7 +6,7 @@
 ###
 
 # The company name - used for SSL certificates, and in srvious other places
-COMPANY_NAME = "Example Com"
+COMPANY_NAME = "Vine.IM"
 
 # The Country Name to use for SSL Certificates
 SSL_COUNTRY_NAME = "US"
@@ -21,11 +21,11 @@ SSL_LOCALITY_NAME = "Locality"
 SSL_ORGANIZATIONAL_UNIT_NAME = "Operations"
 
 # The SSL contact email address
-SSL_EMAIL_ADDRESS = "ops@example.com"
+SSL_EMAIL_ADDRESS = "info@vine-inc.im"
 
 # License for new Cookbooks
 # Can be :apachev2 or :none
-NEW_COOKBOOK_LICENSE = :apachev2
+NEW_COOKBOOK_LICENSE = :none
 
 ###
 # Useful Extras (which you probably don't need to change)

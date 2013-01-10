@@ -9,7 +9,6 @@
 
 # Downdload and install ejabberd, then make sure it runs
 ejabberd_repo_dir = "#{node['dirs']['source']}/ejabberd"
-
 git ejabberd_repo_dir do
   repository "https://github.com/lehrblogger/ejabberd.git"
   # use this HTTP URL, since the SSH URL requires a deploy key
