@@ -14,8 +14,7 @@
       "ssl":    "/home/vagrant/ssl"
     },
     "supervisor": {"log_dir": "/home/vagrant/log_dir/supervisor"},
-    "nginx":      {"log_dir": "/home/vagrant/log_dir/nginx"},
-    "load_dumps": false
+    "nginx":      {"log_dir": "/home/vagrant/log_dir/nginx"}
   },
   "override_attributes": {
   }

@@ -20,9 +20,10 @@ Vagrant::Config.run do |config|
     chef.node_name = "dev_all"
     chef.environment = "dev"
     chef.run_list = [
+      "role[base]",
+      "role[python]",
       "role[ejabberd]",
-      "role[xmpp]",
-      "role[web]"
+      "recipe[vine_shared::load_dumps]"
     ]
   end
   
