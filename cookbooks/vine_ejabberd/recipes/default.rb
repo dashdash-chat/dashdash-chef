@@ -100,7 +100,7 @@ template "ejabberd.cfg" do
 end
 
 # Make sure we have the admin users that we definitely need
-test = node.run_state['config']['xmpp_users']['admins'].map {|admin_user|
+node.run_state['config']['xmpp_users']['admins'].map {|admin_user|
   [admin_user, node.run_state['config']['xmpp_users']['admin_password']]
 }.push(
   [node.run_state['config']['xmlrpc']['leaves_user'], node.run_state['config']['xmlrpc']['leaves_password']],
