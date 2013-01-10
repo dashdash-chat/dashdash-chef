@@ -1,6 +1,6 @@
 worker_processes <%= node['nginx']['worker_processes'] %>;
 user <%= node['nginx']['user'] %><% if node['nginx']['user'] != node['nginx']['group'] %> <%= node['nginx']['group'] %><% end %>;
-error_log  <%= node['nginx']['log_dir'] %>/error.log<% if @env_data['flask']['debug'] %> debug<% end %>;
+error_log  <%= node['nginx']['log_dir'] %>/error.log<% if node.chef_environment =='dev' %> debug<% end %>;
 pid        <%= node['nginx']['pid'] %>;
 
 events {
@@ -26,15 +26,15 @@ http {
     <% end %>
     
     upstream app_server {
-        server localhost:8000 max_fails=5 fail_timeout=10;
+        server <%= node.run_state['config']['flask']['hostport'] %> max_fails=5 fail_timeout=10;
     }
     upstream supervisor_server {
-        server localhost:9001 max_fails=5 fail_timeout=10;
+        server <%= node.run_state['config']['supervisor']['hostport'] %> max_fails=5 fail_timeout=10;
     }
     
     server {
           listen 80;
-          server_name <%= @env_data['server']['domain'] %>;
+          server_name <%= node.run_state['config']['domain'] %>;
           
           location / {
               rewrite ^ https://$server_name$request_uri permanent;
@@ -44,7 +44,7 @@ http {
     server {
         listen 443 ssl;
         client_max_body_size 4G;
-        server_name <%= @env_data['server']['domain'] %>;
+        server_name <%= node.run_state['config']['domain'] %>;
         keepalive_timeout 70;
         
         ssl_certificate      <%= node['dirs']['ssl'] %>/ssl_web.crt;

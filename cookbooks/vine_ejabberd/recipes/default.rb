@@ -6,7 +6,6 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-env_data = data_bag_item("dev_data", "dev_data")
 
 # Downdload and install ejabberd, then make sure it runs
 ejabberd_repo_dir = "#{node['dirs']['source']}/ejabberd"
@@ -84,20 +83,19 @@ end
 
 # Render the SSL and ejabberd.cfg templates, and restart ejabberd
 template "ssl_both.crt" do
-  path "#{node['ssl_dir']}/ssl_both.crt"
+  path "#{node['dirs']['ssl']}/ssl_both.crt"
   source "ssl_both.crt.erb"
   owner "root"
   group "root"
   variables ({
-    :ssl_crt => env_data["server"]["web_ssl_crt"],
-    :ssl_key => env_data["server"]["web_ssl_key"]
+    :ssl_crt => node.run_state['config']['ssl']['web_ssl_crt'],
+    :ssl_key => node.run_state['config']['ssl']['web_ssl_key']
   })
   mode 0600
 end
 template "ejabberd.cfg" do
   path "/etc/ejabberd/ejabberd.cfg"
   source "ejabberd.cfg.erb"
-  variables :env_data => env_data
   notifies :restart, "service[ejabberd]", :immediately
 end
 
@@ -117,14 +115,14 @@ test = node.run_state['config']['xmpp_users']['admins'].map {|admin_user|
     action :register
   end
 end
-# Change the admin passwords anyway
-env_data["xmpp"]["admin_users"].each do |admin_user|
+# Make sure that admins have the Leaf on their roster
+node.run_state['config']['xmpp_users']['admins'].each do |admin_user|
   vine_ejabberd_ctl "ctl" do
     provider "vine_ejabberd_ejabberdctl"
     localuser admin_user
-    localserver env_data["server"]["domain"]
-    user env_data["leaves"]["xmpp_user"]
-    server "#{env_data["leaves"]["domain_prefix"]}.#{env_data["server"]["domain"]}"
+    localserver node.run_state['config']['xmlrpc']['domain']
+    user node.run_state['config']['leaves']['jid_user']
+    server "#{node.run_state['config']['leaves']['subdomain']}.#{node.run_state['config']['xmlrpc']['domain']}"
     nick "Leaf"
     group "Vine-#{node.chef_environment}"
     subs "both"
