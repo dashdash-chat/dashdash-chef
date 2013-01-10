@@ -9,7 +9,6 @@
 # These things are needed by both vine_shared and vine_ejabberd, so the base role should run them first
 #
 # Load the config variables from the environment-specific data bag
-Chef::Log.info(node.run_state)
 node.run_state['config'] = Chef::EncryptedDataBagItem.load(node.chef_environment, "config")
 file Chef::Config[:encrypted_data_bag_secret] do
   action :delete  # no need to keep our secrets sitting on disk all in one place!
