@@ -74,7 +74,7 @@ if node.chef_environment == "dev"
    'twitter_follows'
   ].each do |table_name|
     cookbook_file "#{node['vine_shared']['mysql_dir']}/#{table_name}.sql" do
-      source "#{table_name}.sql"
+      source "tables/#{table_name}.sql"
       owner node.run_state['config']['user']
       group node.run_state['config']['group']
       mode 00444
