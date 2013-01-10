@@ -12,7 +12,7 @@
     "recipe[omnibus_updater]",
     "recipe[vim]",
     "recipe[git]",
-    "recipe[vine_shared::config]"
+    "recipe[vine_shared::prepare]"
   ],
   "env_run_lists": {
   }
