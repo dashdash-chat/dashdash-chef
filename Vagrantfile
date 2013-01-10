@@ -16,6 +16,7 @@ Vagrant::Config.run do |config|
     chef.chef_server_url = "https://api.opscode.com/organizations/vine"
     chef.validation_key_path = "/Volumes/secret_keys/vine-validator.pem"
     chef.validation_client_name = "vine-validator"
+    chef.encrypted_data_bag_secret_key_path = "/Volumes/secret_keys/data_bags/dev_key"
     chef.node_name = "dev_all"
     chef.environment = "dev"
     chef.run_list = [

@@ -1,4 +1,7 @@
-env_data = data_bag_item("dev_data", "dev_data")
+node.run_state['config'] = Chef::EncryptedDataBagItem.load(node.chef_environment, "config")
+file Chef::Config[:encrypted_data_bag_secret] do
+  action :delete  # no need to keep our secrets sitting on disk all in one place!
+end
 
 # Make sure our directories exist
 ["#{node['dirs']['log']}",
@@ -6,8 +9,8 @@ env_data = data_bag_item("dev_data", "dev_data")
  "#{node['dirs']['other']}"
 ].each do |dir|
   directory dir do
-    owner env_data["server"]["user"]
-    group env_data["server"]["group"]
+    owner node.run_state['config']['server']['user']
+    group node.run_state['config']['server']['group']
     mode 00755
     recursive true
     action :create
