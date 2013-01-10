@@ -13,6 +13,7 @@
       "other":  "/home/vagrant/other",
       "ssl":    "/home/vagrant/ssl"
     },
+    "ejabberd":   {"log_dir": "/home/vagrant/log_dir/ejabberd"},
     "supervisor": {"log_dir": "/home/vagrant/log_dir/supervisor"},
     "nginx":      {"log_dir": "/home/vagrant/log_dir/nginx"}
   },

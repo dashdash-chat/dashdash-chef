@@ -9,22 +9,32 @@
 env_data = data_bag_item("dev_data", "dev_data")
 
 # Downdload and install ejabberd, then make sure it runs
-git "#{node['vine_ejabberd']['ejabberd_repo_dir']}" do
+ejabberd_repo_dir = "#{node['dirs']['source']}/ejabberd"
+
+git ejabberd_repo_dir do
   repository "https://github.com/lehrblogger/ejabberd.git"
   # use this HTTP URL, since the SSH URL requires a deploy key
   branch "2.1.x-stanza-restrictions"
-  destination "#{node['vine_ejabberd']['ejabberd_repo_dir']}"
+  destination ejabberd_repo_dir
   action :sync
 end
 package "libexpat1-dev"
 execute "./configure, make, and install ejabberd" do
   command "./configure && make && sudo make install"
-  cwd "#{node['vine_ejabberd']['ejabberd_repo_dir']}/src"
+  cwd "#{ejabberd_repo_dir}/src"
   action :run
+end
+directory node['ejabberd']['log_dir'] do
+    owner node.run_state['config']['user']
+    group node.run_state['config']['group']
+    mode 00755
+    recursive true
+    action :create
+    not_if {File.exists?(node['ejabberd']['log_dir'])}
 end
 service "ejabberd" do
   service_name    "ejabberd"
-  start_command   "ejabberdctl start"
+  start_command   "ejabberdctl start --logs #{node['ejabberd']['log_dir']}"
   stop_command    "ejabberdctl stop"
   status_command  "ejabberdctl status"
   restart_command "ejabberdctl restart"
@@ -39,23 +49,23 @@ service "ejabberd" do
 end
 
 # Download and install the modules, and restart ejabberd
-git "#{node['vine_ejabberd']['modules_repo_dir']}" do
+modules_repo_dir = "#{node['dirs']['source']}/ejabberd-modules"
+git "#{modules_repo_dir}" do
   repository "https://github.com/lehrblogger/ejabberd-modules.git"
   branch "master"
-  destination "#{node['vine_ejabberd']['modules_repo_dir']}"
+  destination "#{modules_repo_dir}"
   action :sync
 end
-["mod_admin_extra",
- "ejabberd_xmlrpc",
-].each do |module_name|
+ejabberd_lib_dir = "/lib/ejabberd"
+['mod_admin_extra', 'ejabberd_xmlrpc'].each do |module_name|
   execute "build #{module_name} module for ejabberd" do
     command "./build.sh"
-    cwd "#{node['vine_ejabberd']['modules_repo_dir']}/#{module_name}/trunk"
+    cwd "#{modules_repo_dir}/#{module_name}/trunk"
     action :run
   end
   execute "install #{module_name} module for ejabberd" do
-    command "cp ebin/#{module_name}.beam #{node['vine_ejabberd']['ejabberd_lib_dir']}/ebin/"
-    cwd "#{node['vine_ejabberd']['modules_repo_dir']}/#{module_name}/trunk"
+    command "cp ebin/#{module_name}.beam #{ejabberd_lib_dir}/ebin/"
+    cwd "#{modules_repo_dir}/#{module_name}/trunk"
     action :run
   end
 end
@@ -67,7 +77,7 @@ bash "install_xmlrpc_erlang" do
   cwd "/tmp"
   code <<-EOH
     tar -xzvf xmlrpc-1.13-ipr2.tgz
-    (cd xmlrpc-1.13/src && make && cp ../ebin/*.beam #{node['vine_ejabberd']['ejabberd_lib_dir']}/ebin/)
+    (cd xmlrpc-1.13/src && make && cp ../ebin/*.beam #{ejabberd_lib_dir}/ebin/)
   EOH
   action :nothing
 end
@@ -85,7 +95,7 @@ template "ssl_both.crt" do
   mode 0600
 end
 template "ejabberd.cfg" do
-  path "#{node['vine_ejabberd']['ejabberd_cfg_dir']}/ejabberd.cfg"
+  path "/etc/ejabberd/ejabberd.cfg"
   source "ejabberd.cfg.erb"
   variables :env_data => env_data
   notifies :restart, "service[ejabberd]", :immediately
