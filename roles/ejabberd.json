@@ -9,7 +9,6 @@
   "chef_type": "role",
   "run_list": [
     "role[base]",
-    "recipe[erlang]",
     "recipe[vine_ejabberd]"
   ],
   "env_run_lists": {

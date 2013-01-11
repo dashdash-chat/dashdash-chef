@@ -1,5 +1,5 @@
 {
-  "name": "python",
+  "name": "supervised",
   "description": "recipes for managing instances with python processes",
   "json_class": "Chef::Role",
   "default_attributes": {

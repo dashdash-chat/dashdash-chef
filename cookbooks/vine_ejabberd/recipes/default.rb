@@ -16,6 +16,7 @@ git ejabberd_repo_dir do
   destination ejabberd_repo_dir
   action :sync
 end
+include_recipe "erlang"
 package "libexpat1-dev"
 execute "./configure, make, and install ejabberd" do
   command "./configure && make && sudo make install"

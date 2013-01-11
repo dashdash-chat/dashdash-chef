@@ -21,9 +21,11 @@ Vagrant::Config.run do |config|
     chef.environment = "dev"
     chef.run_list = [
       "role[base]",
-      "role[python]",
-      "role[ejabberd]",
-      "recipe[vine_shared::load_dumps]"
+      "role[supervised]",
+      "recipe[vine_shared::load_dumps]",
+      "recipe[vine_ejabberd]",
+      "recipe[vine_xmpp]"#,
+      #"recipe[vine_web]"
     ]
   end
   
