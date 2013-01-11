@@ -10,9 +10,9 @@
 
 # Load the config variables from the environment-specific data bag
 node.run_state['config'] = Chef::EncryptedDataBagItem.load(node.chef_environment, "config")
-file Chef::Config[:encrypted_data_bag_secret] do
-  action :delete  # no need to keep our secret key sitting on disk!
-end
+# file Chef::Config[:encrypted_data_bag_secret] do
+#   action :delete  # no need to keep our secret key sitting on disk! ... oh maybe we do need it for later for the deploy keys
+# end
 
 # Make sure our directories exist
 [node['dirs']['log'],
