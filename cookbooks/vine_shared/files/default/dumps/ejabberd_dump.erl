@@ -348,9 +348,9 @@
                <<"rPd0dAZTA5i5uGS8ipjit8qkCiE=">>,
                <<"XPCz2ZJuugdz0n8HXOk9Tg==">>,4096}}.
 {passwd,{"chesire_cat","dev.vine.im"},
-        {scram,<<"XAiNcqNwDzd9WmxH7CYme3DScz0=">>,
-               <<"lOs64I6jdoO5pdDDjhiN3lw3Ftc=">>,
-               <<"oziOn/TYNPJJE6yFrmk1iw==">>,4096}}.
+        {scram,<<"2bnc3HRzIhYGzNvf74QLPYwjkjc=">>,
+               <<"25LS8haXB8uTINd3Pj53m/9AlF8=">>,
+               <<"Lsc2WheS7G4ctLIY9Jp++Q==">>,4096}}.
 {roster,{"dormouse","dev.vine.im",
          {"vinebot_1xxwv92y7jtuh25zi6twdiru5","leaves.dev.vine.im",[]}},
         {"dormouse","dev.vine.im"},
