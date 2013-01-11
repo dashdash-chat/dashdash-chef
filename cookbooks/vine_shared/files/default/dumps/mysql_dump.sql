@@ -70,7 +70,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `invites` WRITE;
 /*!40000 ALTER TABLE `invites` DISABLE KEYS */;
-INSERT INTO `invites` (`id`, `code`, `sender`, `recipient`, `used`, `created`) VALUES (9,'004',NULL,NULL,'0000-00-00 00:00:00','2012-11-30 08:17:41');
+INSERT INTO `invites` (`id`, `code`, `sender`, `recipient`, `used`, `created`) VALUES (9,'004',9,NULL,'0000-00-00 00:00:00','2012-11-30 08:17:41');
 /*!40000 ALTER TABLE `invites` ENABLE KEYS */;
 UNLOCK TABLES;
 
