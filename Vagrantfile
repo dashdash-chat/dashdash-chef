@@ -22,10 +22,10 @@ Vagrant::Config.run do |config|
     chef.run_list = [
       "role[base]",
       "role[supervised]",
-      "recipe[vine_shared::load_dumps]",
       "recipe[vine_ejabberd]",
-      "recipe[vine_xmpp]"#,
-      #"recipe[vine_web]"
+      "recipe[vine_shared::load_dumps]",
+      "recipe[vine_xmpp]",
+      "recipe[vine_web]"
     ]
   end
   
