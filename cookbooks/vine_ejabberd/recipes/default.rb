@@ -123,8 +123,8 @@ node.run_state['config']['xmpp_users']['admins'].each do |admin_user|
     localserver node.run_state['config']['xmlrpc']['domain']
     user node.run_state['config']['leaves']['jid_user']
     server "#{node.run_state['config']['leaves']['subdomain']}.#{node.run_state['config']['xmlrpc']['domain']}"
-    nick "Leaf"
-    group "Vine-#{node.chef_environment}"
+    nick "Leaf-#{node.chef_environment}"
+    group "Vine"
     subs "both"
     action :add_rosteritem
   end
