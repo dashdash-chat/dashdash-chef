@@ -20,7 +20,7 @@
     "port": 5222,
     "echo_user": "chesire_cat",
     "default_password": "dirj8owp2og3mob6yeg2",
-    "employee_users": ["lehrblogger"],
+    "employees": ["lehrblogger"],
     "admins": ["admin1", "admin2"],
     "admin_password": "knoind3awp7av4ror2wi"
   },
