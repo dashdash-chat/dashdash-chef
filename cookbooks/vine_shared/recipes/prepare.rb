@@ -43,7 +43,7 @@ end
     source "ssl.#{type}.erb"
     owner "root"
     group "root"
-    variables :ssl_string => node.run_state['config']['ssl']["web_ssl_#{type}"]
+    variables :ssl_string => node.run_state['config']['ssl']["web_#{type}"]
     mode 00644
   end
 end
