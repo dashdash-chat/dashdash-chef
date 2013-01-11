@@ -36,16 +36,11 @@ file "/home/#{node.run_state['config']['user']}/.bash_history" do
   action :create
   not_if {File.size( "/home/#{node.run_state['config']['user']}/.bash_history") > 0}
 end
-bash_history = ["ps faux | grep",
-                "mysql -u root -p#{node.run_state['config']['mysql']['root_password']} -h #{node.run_state['config']['mysql']['host']} -D #{node.run_state['config']['mysql']['main_name']}",
-                "tail -f -n 200 #{node['dirs']['log']}/"]
-if node.run_list.include?("role[web]")
-  bash_history.push("cd #{node['vine_web']['web_env_dir']} && source bin/activate && cd #{node['vine_web']['web_repo_dir']}")
-end
-if node.run_list.include?("role[xmpp]")
-  bash_history.push("cd #{node['vine_xmpp']['xmpp_env_dir']} && source bin/activate && cd #{node['vine_xmpp']['xmpp_repo_dir']}")
-end
-bash_history.each do |command|
+# TODO move this into a resource so it's not copy-pasted in vine-xmpp and vine-web
+["ps faux | grep",
+ "mysql -u root -p#{node.run_state['config']['mysql']['root_password']} -h #{node.run_state['config']['mysql']['host']} -D #{node.run_state['config']['mysql']['main_name']}",
+ "tail -f -n 200 #{node['dirs']['log']}/"
+].each do |command|
   ruby_block "append line to history" do
     block do
       file = Chef::Util::FileEdit.new("/home/#{node.run_state['config']['user']}/.bash_history")
