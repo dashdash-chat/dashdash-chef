@@ -1,4 +1,4 @@
-actions :register, :add_rosteritem, :load
+actions :register_or_update, :add_rosteritem, :load
 
 attribute :name, :kind_of => String, :name_attribute => true
 attribute :localuser, :kind_of => String

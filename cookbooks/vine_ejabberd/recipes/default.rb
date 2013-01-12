@@ -47,7 +47,7 @@ service "ejabberd" do
   action :start
 end
 
-# Download and install the modules, and restart ejabberd
+# Download and install the modules, but we'll restart ejabberd later
 modules_repo_dir = "#{node['dirs']['source']}/ejabberd-modules"
 git "#{modules_repo_dir}" do
   repository "https://github.com/lehrblogger/ejabberd-modules.git"
@@ -112,7 +112,7 @@ node.run_state['config']['xmpp_users']['admins'].map {|admin_user|
     localuser username_password[0]
     localserver node.run_state['config']['domain']
     password username_password[1]
-    action :register
+    action :register_or_update
   end
 end
 # Make sure that admins have the Leaf on their roster

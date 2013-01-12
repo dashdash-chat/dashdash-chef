@@ -1,4 +1,11 @@
-action :register do
+action :register_or_update do
+  execute "change_password #{new_resource.localuser}@#{new_resource.localserver}" do
+    not_if  "ejabberdctl check_password  #{new_resource.localuser} #{new_resource.localserver} #{new_resource.password}"
+    command "ejabberdctl change_password #{new_resource.localuser} #{new_resource.localserver} #{new_resource.password}"
+    retries node['vine_ejabberd']['ejabberdctl']['retries']
+    retry_delay node['vine_ejabberd']['ejabberdctl']['retry_delay']
+  end
+  
   execute "register #{new_resource.localuser}@#{new_resource.localserver}" do
     not_if "ejabberdctl check_account #{new_resource.localuser} #{new_resource.localserver}"
     command "ejabberdctl register #{new_resource.localuser} #{new_resource.localserver} #{new_resource.password}"
