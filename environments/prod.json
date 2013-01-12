@@ -40,7 +40,7 @@
       "source": "/home/ubuntu/source_dir",
       "log":    "/home/ubuntu/log_dir",
       "other":  "/home/ubuntu/other",
-      "ssl":    "/home/ubuntuuser/ssl"
+      "ssl":    "/home/ubuntu/ssl"
     },
     "ejabberd":   {"log_dir": "/home/ubuntu/log_dir/ejabberd"},
     "supervisor": {"log_dir": "/home/ubuntu/log_dir/supervisor"},
