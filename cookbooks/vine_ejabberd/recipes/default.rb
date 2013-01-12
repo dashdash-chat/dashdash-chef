@@ -17,6 +17,14 @@ git ejabberd_repo_dir do
   action :sync
 end
 include_recipe "erlang"
+include_recipe "zlib"
+packages = value_for_platform(
+    ["centos","redhat","fedora","amazon","scientific"] => {'default' => ['openssl-devel']},
+    "default" => ['libssl-dev']
+  )
+packages.each do |devpkg|
+  package devpkg
+end
 package "libexpat1-dev"
 execute "./configure, make, and install ejabberd" do
   command "./configure && make && sudo make install"

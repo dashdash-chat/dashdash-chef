@@ -12,6 +12,7 @@
     "recipe[omnibus_updater]",
     "recipe[vim]",
     "recipe[git]",
+    "recipe[build-essential]",
     "recipe[vine_shared::prepare]"
   ],
   "env_run_lists": {

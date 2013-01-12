@@ -26,6 +26,7 @@
     "windows":         "= 1.7.0",
     "xfs":             "= 1.1.0",
     "yum":             "= 2.1.0",
+    "zlib":            "= 2.0.0",
     "vine_shared":     "= 1.0.0",
     "vine_ejabberd":   "= 1.0.0",
     "vine_xmpp":       "= 1.0.0",
@@ -36,14 +37,14 @@
   "default_attributes": {
     "omnibus_updater": { "version": "10.16.4" },
     "dirs": {
-      "source": "/home/ec2-user/source_dir",
-      "log":    "/home/ec2-user/log_dir",
-      "other":  "/home/ec2-user/other",
-      "ssl":    "/home/ec2-user/ssl"
+      "source": "/home/ubuntu/source_dir",
+      "log":    "/home/ubuntu/log_dir",
+      "other":  "/home/ubuntu/other",
+      "ssl":    "/home/ubuntuuser/ssl"
     },
-    "ejabberd":   {"log_dir": "/home/ec2-user/log_dir/ejabberd"},
-    "supervisor": {"log_dir": "/home/ec2-user/log_dir/supervisor"},
-    "nginx":      {"log_dir": "/home/ec2-user/log_dir/nginx"}
+    "ejabberd":   {"log_dir": "/home/ubuntu/log_dir/ejabberd"},
+    "supervisor": {"log_dir": "/home/ubuntu/log_dir/supervisor"},
+    "nginx":      {"log_dir": "/home/ubuntu/log_dir/nginx"}
   },
   "override_attributes": {
   }

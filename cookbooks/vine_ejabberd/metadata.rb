@@ -7,3 +7,4 @@ version          "1.0.0"
 
 #NOTE using specific versions so that I can stay aware of changes in upstream cookbooks
 depends "erlang", "= 1.1.2"
+depends "zlib", "= 2.0.0"
