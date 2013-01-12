@@ -47,8 +47,8 @@ http {
         server_name <%= node.run_state['config']['domain'] %>;
         keepalive_timeout 70;
         
-        ssl_certificate      <%= node['dirs']['ssl'] %>/ssl_web.crt;
-        ssl_certificate_key  <%= node['dirs']['ssl'] %>/ssl_web.key;
+        ssl_certificate      <%= node['dirs']['ssl'] %>/ssl.crt;
+        ssl_certificate_key  <%= node['dirs']['ssl'] %>/ssl.key;
         ssl_session_cache    shared:SSL:10m;
         ssl_session_timeout  10m;
         ssl_protocols  SSLv2 SSLv3 TLSv1;

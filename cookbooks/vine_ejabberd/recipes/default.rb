@@ -88,8 +88,8 @@ template "ssl_both.crt" do
   owner "root"
   group "root"
   variables ({
-    :ssl_crt => node.run_state['config']['ssl']['web_crt'],
-    :ssl_key => node.run_state['config']['ssl']['web_key']
+    :ssl_crt => node.run_state['config']['ssl']['ejabberd_crt'],
+    :ssl_key => node.run_state['config']['ssl']['ejabberd_key']
   })
   mode 0600
 end

@@ -38,12 +38,19 @@ directory node['dirs']['ssl'] do
 end
 
 # Create the SSL certificate and key files (the leaf component needs these if it has it's own supervisor!)
+if node.run_list.include?("role[xmpp]")  #LATER make this cleaner
+  role = 'xmpp'
+elsif node.run_list.include?("role[web]")  # We're relying on the fact that we don't use these roles on dev
+  role = 'web'
+else
+  role = 'ejabberd'
+end  
 ['crt', 'key'].each do |type|
-  template "#{node['dirs']['ssl']}/ssl_web.#{type}" do
+  template "#{node['dirs']['ssl']}/ssl.#{type}" do
     source "ssl.#{type}.erb"
     owner "root"
     group "root"
-    variables :ssl_string => node.run_state['config']['ssl']["web_#{type}"]
+    variables :ssl_string => node.run_state['config']['ssl']["#{role}_#{type}"]
     mode 00644
   end
 end
