@@ -28,7 +28,7 @@ if node.chef_environment == 'dev'
   end
   # Load the other into MySQL
   execute "import mysql vine databse" do
-    command "mysql -h #{node.run_state['config']['mysql']['host']} -u root -p#{node.run_state['config']['mysql']['root_password']} vine < #{node['dirs']['other']}/mysql_dump.sql"
+    command "mysql -h #{node.run_state['config']['mysql']['host']}  -u #{node.run_state['config']['mysql']['root_user']} -p#{node.run_state['config']['mysql']['root_password']} vine < #{node['dirs']['other']}/mysql_dump.sql"
     action :run
   end
 end

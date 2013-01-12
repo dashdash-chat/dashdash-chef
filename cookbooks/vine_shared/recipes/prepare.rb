@@ -65,10 +65,10 @@ if node.chef_environment == "dev"
     end
   end
   
-  node.set['mysql']['server_root_password'] = node.run_state['config']['mysql']['root_password']
+  node.set['mysql']['server_root_user'] = node.run_state['config']['mysql']['root_user']
 end
 
-# Add commonly-used commands to the bash history (node.run_state['config']['mysql']['root_password'] is nil in prod, which works perfectly)
+# Add commonly-used commands to the bash history (is nil in prod, which works perfectly)
 bash_history = "/home/#{node.run_state['config']['user']}/.bash_history"
 file bash_history do
   owner node.run_state['config']['user']
@@ -78,9 +78,13 @@ file bash_history do
   action :create
   not_if {File.exists?(bash_history) and File.size(bash_history) > 0}
 end
+mysql_root_password = ''
+if node.chef_environment == "dev"  # Don't put the root password in the .bash_history in prod!
+  mysql_root_password = node.run_state['config']['mysql']['root_password']
+end
 # TODO move this into a resource so it's not copy-pasted in vine-xmpp and vine-web
 ["ps faux | grep",
- "mysql -u root -p#{node.run_state['config']['mysql']['root_password']} -h #{node.run_state['config']['mysql']['host']} -D #{node.run_state['config']['mysql']['main_name']}",
+ "mysql -u #{node.run_state['config']['mysql']['root_user']} -p#{mysql_root_password} -h #{node.run_state['config']['mysql']['host']} -D #{node.run_state['config']['mysql']['main_name']}",
  "tail -f -n 200 #{node['dirs']['log']}/"
 ].each do |command|
   ruby_block "append line to history" do

@@ -9,7 +9,7 @@
 
 include_recipe "mysql::server"
 include_recipe "database::mysql"
-mysql_connection_info = {:host => node.run_state['config']['mysql']['host'], :username => 'root', :password => node.run_state['config']['mysql']['root_password']}
+mysql_connection_info = {:host => node.run_state['config']['mysql']['host'], :username => node.run_state['config']['mysql']['root_user'], :password => node.run_state['config']['mysql']['root_password']}
 
 # We don't want to mess with the databases or tables in prod
 if node.chef_environment == "dev"
@@ -26,7 +26,7 @@ if node.chef_environment == "dev"
   [node.run_state['config']['mysql']['main_name']
   ].each do |db_name|
     execute "dump database #{db_name}" do
-      command "mysqldump --no-create-info --complete-insert -h #{node.run_state['config']['mysql']['host']} -u root -p#{node.run_state['config']['mysql']['root_password']} #{db_name} > #{node['vine_shared']['mysql_dir']}/#{db_name}.sql"
+      command "mysqldump --no-create-info --complete-insert -h #{node.run_state['config']['mysql']['host']} -u #{node.run_state['config']['mysql']['root_user']} -p#{node.run_state['config']['mysql']['root_password']} #{db_name} > #{node['vine_shared']['mysql_dir']}/#{db_name}.sql"
       #NOTE use the --no-create-info flag, so we can try to re-populate our tables with the previous data
       action :run
       only_if {File.exists?("#{node['vine_shared']['mysql_dir']}/#{db_name}.sql")}
@@ -93,7 +93,7 @@ if node.chef_environment == "dev"
     [node.run_state['config']['mysql']['main_name']
     ].each do |db_name|
       execute "import database #{db_name}" do
-        command "mysql -h #{node.run_state['config']['mysql']['host']} -u root -p#{node.run_state['config']['mysql']['root_password']} #{db_name} < #{node['vine_shared']['mysql_dir']}/#{db_name}.sql"
+        command "mysql -h #{node.run_state['config']['mysql']['host']} -u #{node.run_state['config']['mysql']['root_user']} -p#{node.run_state['config']['mysql']['root_password']} #{db_name} < #{node['vine_shared']['mysql_dir']}/#{db_name}.sql"
         action :run
       end
     end
