@@ -10,6 +10,7 @@
   "run_list": [
     "recipe[chef-client]",
     "role[base]",
+    "recipe[build-essential]",
     "recipe[vine_ejabberd]"
   ],
   "env_run_lists": {
