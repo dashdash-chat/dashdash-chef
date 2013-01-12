@@ -89,18 +89,28 @@ bash "install_xmlrpc_erlang" do
   action :nothing
 end
 
-# Render the SSL and ejabberd.cfg templates, and restart ejabberd
-template "ssl_both.crt" do
-  path "#{node['dirs']['ssl']}/ssl_both.crt"
-  source "ssl_both.crt.erb"
-  owner "root"
-  group "root"
-  variables ({
-    :ssl_crt => node.run_state['config']['ssl']['ejabberd_crt'],
-    :ssl_key => node.run_state['config']['ssl']['ejabberd_key']
-  })
-  mode 0600
+# Render the SSL and ejabberd.cfg templates (note that in prod you need different certs for IM and http!), and restart ejabberd
+['ejabberd', 'web'].each do |file_name|
+  cert_name = file_name
+  unless node.run_list.include?("role[ejabberd]")  #LATER make this cleaner
+    cert_name = 'ejabberd'  # use the same cert for both files on dev
+  end
+  Chef::Log.info('wtf')
+  Chef::Log.info(node.run_list)
+  Chef::Log.info(file_name)
+  Chef::Log.info(cert_name)
+  template "#{node['dirs']['ssl']}/#{file_name}_ssl_both.crt" do
+    source "ssl_both.crt.erb"
+    owner "root"
+    group "root"
+    variables ({
+      :ssl_crt => node.run_state['config']['ssl']["#{cert_name}_crt"],
+      :ssl_key => node.run_state['config']['ssl']["#{cert_name}_key"]
+    })
+    mode 0600
+  end
 end
+
 template "ejabberd.cfg" do
   path "/etc/ejabberd/ejabberd.cfg"
   source "ejabberd.cfg.erb"

@@ -72,7 +72,7 @@
 			%% certificate, specify the full path to the
 			%% file and uncomment this line:
 			%%
-			{certfile, "<%= node['dirs']['ssl'] %>/ssl_both.crt"}, starttls,
+			{certfile, "<%= node['dirs']['ssl'] %>/web_ssl_both.crt"}, starttls,
 			{access, c2s},
 			{shaper, c2s_shaper},
 			{max_stanza_size, 65536}
@@ -106,7 +106,7 @@
   %%
   %%{{3478, udp}, ejabberd_stun, []},
   {5281, ejabberd_http, [
-			 {certfile, "<%= node['dirs']['ssl'] %>/ssl_both.crt"}, tls,
+			 {certfile, "<%= node['dirs']['ssl'] %>/ejabberd_ssl_both.crt"}, tls,
 			 http_bind,
  			 http_poll,
 			 web_admin
