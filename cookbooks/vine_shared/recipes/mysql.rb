@@ -7,11 +7,11 @@
 # All rights reserved - Do Not Redistribute
 #
 
+include_recipe "mysql::server"
+include_recipe "database::mysql"
+
+# We don't want to mess with the databases or tables in prod
 if node.chef_environment == "dev"
-  # Include the required database cookbooks only if we're on dev, since we don't want to install these in prod
-  include_recipe "mysql::server"
-  include_recipe "database::mysql"
-  
   mysql_connection_info = {:host => node.run_state['config']['mysql']['host'], :username => 'root', :password => node.run_state['config']['mysql']['root_password']}
   node.set['vine_shared']['mysql_dir'] = "#{node['dirs']['source']}/mysql"
   directory node['vine_shared']['mysql_dir'] do
@@ -98,111 +98,112 @@ if node.chef_environment == "dev"
       end
     end
   end
-  
-  # create the users
-  [[node.run_state['config']['mysql']['web_user'],    node.run_state['config']['mysql']['web_password']],
-   [node.run_state['config']['mysql']['graph_user'],  node.run_state['config']['mysql']['graph_password']],
-   [node.run_state['config']['mysql']['celery_user'], node.run_state['config']['mysql']['celery_password']],
-   [node.run_state['config']['mysql']['leaves_user'], node.run_state['config']['mysql']['leaves_password']]
-  ].each do |user_password|
-    mysql_database_user user_password[0] do
-      connection mysql_connection_info
-      password user_password[1]
-      action :create
-    end
-  end
-
-  # grant privileges to the web user
-  [[node.run_state['config']['mysql']['main_name'], 'users',        [:select, :update, :insert]],
-   [node.run_state['config']['mysql']['main_name'], 'invites',      [:select, :update, :insert]],
-   [node.run_state['config']['mysql']['main_name'], 'demos',        [:select, :update, :insert]],
-   [node.run_state['config']['mysql']['main_name'], 'edges',        [:select]],
-   [node.run_state['config']['mysql']['main_name'], 'vinebots',     [:select]],
-   [node.run_state['config']['mysql']['main_name'], 'user_tasks',   [:select, :insert]]
-  ].each do |db_table_privileges|
-    mysql_database_user node.run_state['config']['mysql']['web_user'] do
-      connection mysql_connection_info
-      database_name db_table_privileges[0]
-      table db_table_privileges[1]
-      privileges db_table_privileges[2]
-      host '%'
-      action :grant
-    end
-  end
-
-  # grant privileges to the graph user
-  [[node.run_state['config']['mysql']['main_name'], 'invites',            [:select]],
-   [node.run_state['config']['mysql']['main_name'], 'commands',           [:select]],
-   [node.run_state['config']['mysql']['main_name'], 'messages',           [:select]],
-   [node.run_state['config']['mysql']['main_name'], 'recipients',         [:select]],
-   [node.run_state['config']['mysql']['main_name'], 'users',              [:select]],
-   [node.run_state['config']['mysql']['main_name'], 'blocks',             [:select]],
-   [node.run_state['config']['mysql']['main_name'], 'artificial_follows', [:select]],
-   [node.run_state['config']['mysql']['main_name'], 'twitter_follows',    [:select]],
-   [node.run_state['config']['mysql']['main_name'], 'edges',              [:select]]
-  ].each do |db_table_privileges|
-    mysql_database_user node.run_state['config']['mysql']['graph_user'] do
-      connection mysql_connection_info
-      database_name db_table_privileges[0]
-      table db_table_privileges[1]
-      privileges db_table_privileges[2]
-      host '%'
-      action :grant
-    end
-  end
-
-  # grant privileges to the celery user
-  [[node.run_state['config']['mysql']['celery_name'], nil,             [:all]],  #NOTE it will replace 'nil' with the default of '*'
-   [node.run_state['config']['mysql']['main_name'], 'users',           [:select]],
-   [node.run_state['config']['mysql']['main_name'], 'twitter_follows', [:select, :update, :insert, :delete]]
-  ].each do |db_table_privileges|
-    mysql_database_user node.run_state['config']['mysql']['celery_user'] do
-      connection mysql_connection_info
-      database_name db_table_privileges[0]
-      table db_table_privileges[1]
-      privileges db_table_privileges[2]
-      host '%'
-      action :grant
-    end
-  end
-
-  # grant privileges to the leaves user
-  [[node.run_state['config']['mysql']['main_name'], 'users',        [:select, :update, :insert]],
-   [node.run_state['config']['mysql']['main_name'], 'edges',        [:select, :update, :insert, :delete]],
-   [node.run_state['config']['mysql']['main_name'], 'vinebots',     [:select, :update, :insert, :delete]],
-   [node.run_state['config']['mysql']['main_name'], 'participants', [:select, :update, :insert, :delete]],
-   [node.run_state['config']['mysql']['main_name'], 'topics',       [:select, :update, :insert, :delete]],
-   [node.run_state['config']['mysql']['main_name'], 'commands',     [:select, :insert]],
-   [node.run_state['config']['mysql']['main_name'], 'messages',     [:select, :insert]],
-   [node.run_state['config']['mysql']['main_name'], 'recipients',   [:insert]]#,
-   #The following are needed only for the destructive /purge_user command, so don't leave them as granted most of the time?
-   # [node.run_state['config']['mysql']['main_name'], 'user_tasks',         [:select, :delete]],
-   # [node.run_state['config']['mysql']['main_name'], 'demos',              [:select, :delete]],
-   # [node.run_state['config']['mysql']['main_name'], 'invites',            [:select, :delete, :update]],
-   # [node.run_state['config']['mysql']['main_name'], 'blocks',             [:select, :delete]],
-   # [node.run_state['config']['mysql']['main_name'], 'artificial_follows', [:select, :delete]],
-   # [node.run_state['config']['mysql']['main_name'], 'twitter_follows',    [:select, :delete]],
-   # [node.run_state['config']['mysql']['main_name'], 'recipients',         [:select, :delete]],
-   # [node.run_state['config']['mysql']['main_name'], 'messages',           [:select, :delete]],
-   # [node.run_state['config']['mysql']['main_name'], 'commands',           [:select, :delete]],
-   # [node.run_state['config']['mysql']['main_name'], 'users',              [:select, :delete]]
-  ].each do |db_table_privileges|
-    mysql_database_user node.run_state['config']['mysql']['leaves_user'] do
-      connection mysql_connection_info
-      database_name db_table_privileges[0]
-      table db_table_privileges[1]
-      privileges db_table_privileges[2]
-      host '%'
-      action :grant
-    end
-  end
-
-  # flush priveleges
-  mysql_database "flush the privileges" do
-    connection mysql_connection_info
-    sql "FLUSH PRIVILEGES"
-    action :query
-  end
-  
-  #TODO delete mysql dump files so they arent on disk?
 end
+
+# But we do want to make sure that users exist with the proper permissions in prod
+# create the users
+[[node.run_state['config']['mysql']['web_user'],    node.run_state['config']['mysql']['web_password']],
+ [node.run_state['config']['mysql']['graph_user'],  node.run_state['config']['mysql']['graph_password']],
+ [node.run_state['config']['mysql']['celery_user'], node.run_state['config']['mysql']['celery_password']],
+ [node.run_state['config']['mysql']['leaves_user'], node.run_state['config']['mysql']['leaves_password']]
+].each do |user_password|
+  mysql_database_user user_password[0] do
+    connection mysql_connection_info
+    password user_password[1]
+    action :create
+  end
+end
+
+# grant privileges to the web user
+[[node.run_state['config']['mysql']['main_name'], 'users',        [:select, :update, :insert]],
+ [node.run_state['config']['mysql']['main_name'], 'invites',      [:select, :update, :insert]],
+ [node.run_state['config']['mysql']['main_name'], 'demos',        [:select, :update, :insert]],
+ [node.run_state['config']['mysql']['main_name'], 'edges',        [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'vinebots',     [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'user_tasks',   [:select, :insert]]
+].each do |db_table_privileges|
+  mysql_database_user node.run_state['config']['mysql']['web_user'] do
+    connection mysql_connection_info
+    database_name db_table_privileges[0]
+    table db_table_privileges[1]
+    privileges db_table_privileges[2]
+    host '%'
+    action :grant
+  end
+end
+
+# grant privileges to the graph user
+[[node.run_state['config']['mysql']['main_name'], 'invites',            [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'commands',           [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'messages',           [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'recipients',         [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'users',              [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'blocks',             [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'artificial_follows', [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'twitter_follows',    [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'edges',              [:select]]
+].each do |db_table_privileges|
+  mysql_database_user node.run_state['config']['mysql']['graph_user'] do
+    connection mysql_connection_info
+    database_name db_table_privileges[0]
+    table db_table_privileges[1]
+    privileges db_table_privileges[2]
+    host '%'
+    action :grant
+  end
+end
+
+# grant privileges to the celery user
+[[node.run_state['config']['mysql']['celery_name'], nil,             [:all]],  #NOTE it will replace 'nil' with the default of '*'
+ [node.run_state['config']['mysql']['main_name'], 'users',           [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'twitter_follows', [:select, :update, :insert, :delete]]
+].each do |db_table_privileges|
+  mysql_database_user node.run_state['config']['mysql']['celery_user'] do
+    connection mysql_connection_info
+    database_name db_table_privileges[0]
+    table db_table_privileges[1]
+    privileges db_table_privileges[2]
+    host '%'
+    action :grant
+  end
+end
+
+# grant privileges to the leaves user
+[[node.run_state['config']['mysql']['main_name'], 'users',        [:select, :update, :insert]],
+ [node.run_state['config']['mysql']['main_name'], 'edges',        [:select, :update, :insert, :delete]],
+ [node.run_state['config']['mysql']['main_name'], 'vinebots',     [:select, :update, :insert, :delete]],
+ [node.run_state['config']['mysql']['main_name'], 'participants', [:select, :update, :insert, :delete]],
+ [node.run_state['config']['mysql']['main_name'], 'topics',       [:select, :update, :insert, :delete]],
+ [node.run_state['config']['mysql']['main_name'], 'commands',     [:select, :insert]],
+ [node.run_state['config']['mysql']['main_name'], 'messages',     [:select, :insert]],
+ [node.run_state['config']['mysql']['main_name'], 'recipients',   [:insert]]#,
+ #The following are needed only for the destructive /purge_user command, so don't leave them as granted most of the time?
+ # [node.run_state['config']['mysql']['main_name'], 'user_tasks',         [:select, :delete]],
+ # [node.run_state['config']['mysql']['main_name'], 'demos',              [:select, :delete]],
+ # [node.run_state['config']['mysql']['main_name'], 'invites',            [:select, :delete, :update]],
+ # [node.run_state['config']['mysql']['main_name'], 'blocks',             [:select, :delete]],
+ # [node.run_state['config']['mysql']['main_name'], 'artificial_follows', [:select, :delete]],
+ # [node.run_state['config']['mysql']['main_name'], 'twitter_follows',    [:select, :delete]],
+ # [node.run_state['config']['mysql']['main_name'], 'recipients',         [:select, :delete]],
+ # [node.run_state['config']['mysql']['main_name'], 'messages',           [:select, :delete]],
+ # [node.run_state['config']['mysql']['main_name'], 'commands',           [:select, :delete]],
+ # [node.run_state['config']['mysql']['main_name'], 'users',              [:select, :delete]]
+].each do |db_table_privileges|
+  mysql_database_user node.run_state['config']['mysql']['leaves_user'] do
+    connection mysql_connection_info
+    database_name db_table_privileges[0]
+    table db_table_privileges[1]
+    privileges db_table_privileges[2]
+    host '%'
+    action :grant
+  end
+end
+
+# flush priveleges
+mysql_database "flush the privileges" do
+  connection mysql_connection_info
+  sql "FLUSH PRIVILEGES"
+  action :query
+end
+
+#TODO delete mysql dump files so they arent on disk?
