@@ -26,27 +26,3 @@ node.set['supervisor']['inet_username'] = node.run_state['config']['supervisor']
 node.set['supervisor']['inet_password'] = node.run_state['config']['supervisor']['password']
 include_recipe "supervisor"
 #TODO how to reload on new run to re-establish mysql conn? supervisorctl restart all? test this in dashboard first!
-
-# Add commonly-used commands to the bash history (node.run_state['config']['mysql']['root_password'] is nil in prod, which works perfectly)
-file "/home/#{node.run_state['config']['user']}/.bash_history" do
-  owner node.run_state['config']['user']
-  group node.run_state['config']['group']
-  mode 00755
-  content "history"  # Chef::Util::FileEdit needs the file not to be blank
-  action :create
-  not_if {File.size( "/home/#{node.run_state['config']['user']}/.bash_history") > 0}
-end
-# TODO move this into a resource so it's not copy-pasted in vine-xmpp and vine-web
-["ps faux | grep",
- "mysql -u root -p#{node.run_state['config']['mysql']['root_password']} -h #{node.run_state['config']['mysql']['host']} -D #{node.run_state['config']['mysql']['main_name']}",
- "tail -f -n 200 #{node['dirs']['log']}/"
-].each do |command|
-  ruby_block "append line to history" do
-    block do
-      file = Chef::Util::FileEdit.new("/home/#{node.run_state['config']['user']}/.bash_history")
-      file.insert_line_if_no_match("/[^\s\S]/", command)  # regex never matches anything
-      file.write_file
-    end
-  end
-end
-
