@@ -95,10 +95,6 @@ end
   unless node.run_list.include?("role[ejabberd]")  #LATER make this cleaner
     cert_name = 'ejabberd'  # use the same cert for both files on dev
   end
-  Chef::Log.info('wtf')
-  Chef::Log.info(node.run_list)
-  Chef::Log.info(file_name)
-  Chef::Log.info(cert_name)
   template "#{node['dirs']['ssl']}/#{file_name}_ssl_both.crt" do
     source "ssl_both.crt.erb"
     owner "root"

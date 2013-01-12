@@ -44,4 +44,25 @@ knife ssh name:prod_ejabberd \
   --identity-file     /Volumes/secret_keys/aws_key_pairs/vine-ejabberd-key.pem \
   --ssh-user          ubuntu \
   "sudo chef-client"
+
+knife node delete prod_leaves && \
+knife client delete prod_leaves && \
+knife ec2 server create \
+  --config            /Volumes/secret_keys/knife-ec2.rb \
+  --image             ami-3d4ff254 \
+  --ssh-user          ubuntu \
+  --flavor            m1.small \
+  --groups            vine-leaves\
+  --run-list          role[xmpp] \
+  --node-name         prod_leaves \
+  --server-url        https://api.opscode.com/organizations/vine \
+  --environment       prod \
+  --ssh-key           vine-leaves-key \
+  --identity-file     /Volumes/secret_keys/aws_key_pairs/vine-leaves-key.pem \
+  --availability-zone us-east-1b \
+  --bootstrap-version 10.16.4 \
+  --ebs-no-delete-on-term
+  
+  
 ```
+
