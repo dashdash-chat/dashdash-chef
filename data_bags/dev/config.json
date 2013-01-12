@@ -36,7 +36,7 @@
   "supervisor": {
     "hostport": "localhost:9001",
     "username": "admin",
-    "password": "password"
+    "password": "{SHA}5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8"
   },
   "flask": {
     "hostport": "localhost:8000",
