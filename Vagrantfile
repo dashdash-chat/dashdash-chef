@@ -17,7 +17,7 @@ Vagrant::Config.run do |config|
     chef.validation_key_path = "/Volumes/secret_keys/vine-validator.pem"
     chef.validation_client_name = "vine-validator"
     chef.encrypted_data_bag_secret_key_path = "/Volumes/secret_keys/data_bags/dev_key"
-    chef.node_name = "dev_all"
+    chef.node_name = "dev_all_vm2"
     chef.environment = "dev"
     chef.run_list = [
       "role[base]",
