@@ -4,7 +4,6 @@ Useful Commands
 rvmsudo vagrant destroy && \
 knife node delete dev_all && knife client delete dev_all && \
 sudo rm -rf ~/Dropbox/projects/vine/vine-chef/source_dir/ && \
-sudo rm -rf ~/Dropbox/projects/vine/vine-chef/log_dir/ && \
 time sh upload_all.sh && time rvmsudo vagrant up
 
 
