@@ -44,7 +44,7 @@ elsif node.run_list.include?("role[web]")  # We're relying on the fact that we d
   role = 'web'
 else
   role = 'ejabberd'
-end  
+end
 ['crt', 'key'].each do |type|
   template "#{node['dirs']['ssl']}/ssl.#{type}" do
     source "ssl.#{type}.erb"
