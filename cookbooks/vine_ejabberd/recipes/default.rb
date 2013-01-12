@@ -128,9 +128,9 @@ node.run_state['config']['xmpp_users']['admins'].each do |admin_user|
   vine_ejabberd_ctl "ctl" do
     provider "vine_ejabberd_ejabberdctl"
     localuser admin_user
-    localserver node.run_state['config']['xmlrpc']['domain']
+    localserver node.run_state['config']['domain']
     user node.run_state['config']['leaves']['jid_user']
-    server "#{node.run_state['config']['leaves']['subdomain']}.#{node.run_state['config']['xmlrpc']['domain']}"
+    server "#{node.run_state['config']['leaves']['subdomain']}.#{node.run_state['config']['domain']}"
     nick "Leaf-#{node.chef_environment}"
     group "Vine"
     subs "both"
