@@ -84,6 +84,7 @@ if node.chef_environment == "dev"  # Don't put the root password in the .bash_hi
 end
 # TODO move this into a resource so it's not copy-pasted in vine-xmpp and vine-web
 ["ps faux | grep",
+ "sudo tail -f -n 100 /var/log/chef/client.log",
  "mysql -u #{node.run_state['config']['mysql']['root_user']} -p#{mysql_root_password} -h #{node.run_state['config']['mysql']['host']} -D #{node.run_state['config']['mysql']['main_name']}",
  "tail -f -n 200 #{node['dirs']['log']}/"
 ].each do |command|
