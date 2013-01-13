@@ -7,12 +7,12 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include_recipe "mysql::server"
 include_recipe "database::mysql"
 mysql_connection_info = {:host => node.run_state['config']['mysql']['host'], :username => node.run_state['config']['mysql']['root_user'], :password => node.run_state['config']['mysql']['root_password']}
 
 # We don't want to mess with the databases or tables in prod
 if node.chef_environment == "dev"
+  include_recipe "mysql::server"
   node.set['vine_shared']['mysql_dir'] = "#{node['dirs']['source']}/mysql"
   directory node['vine_shared']['mysql_dir'] do
     owner "root"
