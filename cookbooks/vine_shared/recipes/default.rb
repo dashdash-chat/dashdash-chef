@@ -8,12 +8,20 @@
 #
 
 # Create the nginx.conf file
+
+node.run_state['config']['domain']
+
+domain = node.run_state['config']['domain']
+if node.run_list.include?("role[xmpp]")  #LATER sigh, not sure how to make this neater
+  domain = "#{node.run_state['config']['leaves']['subdomain']}.#{node.run_state['config']['domain']}"
+end
 template "nginx.conf" do
   path "#{node['nginx']['dir']}/nginx.conf"
   source "nginx.conf.erb"
   owner "root"
   group "root"
   mode 00644
+  variables :domain => domain
   notifies :reload, 'service[nginx]'
 end
 

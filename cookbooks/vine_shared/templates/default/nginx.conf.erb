@@ -34,7 +34,7 @@ http {
     
     server {
           listen 80;
-          server_name <%= node.run_state['config']['domain'] %>;
+          server_name <%= @domain %>;
           
           location / {
               rewrite ^ https://$server_name$request_uri permanent;
@@ -44,7 +44,7 @@ http {
     server {
         listen 443 ssl;
         client_max_body_size 4G;
-        server_name <%= node.run_state['config']['domain'] %>;
+        server_name <%= @domain %>;
         keepalive_timeout 70;
         
         ssl_certificate      <%= node['dirs']['ssl'] %>/ssl.crt;
