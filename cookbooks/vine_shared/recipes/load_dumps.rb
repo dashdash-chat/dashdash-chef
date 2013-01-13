@@ -22,7 +22,7 @@ if node.chef_environment == 'dev'
   end
   # Load one into ejabberd
   vine_ejabberd_ctl "ctl" do
-    provider "vine_ejabberd_ejabberdctl"
+    provider "vine_ejabberd_ctl"
     file "#{node['dirs']['other']}/ejabberd_dump.erl"
     action :load
   end

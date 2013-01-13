@@ -119,10 +119,11 @@ node.run_state['config']['xmpp_users']['admins'].map {|admin_user|
 }.push(
   [node.run_state['config']['xmlrpc']['leaves_user'], node.run_state['config']['xmlrpc']['leaves_password']],
   [node.run_state['config']['xmlrpc']['graph_user'], node.run_state['config']['xmlrpc']['graph_password']],
-  [node.run_state['config']['xmlrpc']['web_user'], node.run_state['config']['xmlrpc']['web_password']]
+  [node.run_state['config']['xmlrpc']['web_user'], node.run_state['config']['xmlrpc']['web_password']],
+  [node.run_state['config']['xmpp_users']['echo_user'], node.run_state['config']['xmpp_users']['default_password']]
 ).each do |username_password|
   vine_ejabberd_ctl "ctl" do
-    provider "vine_ejabberd_ejabberdctl"
+    provider "vine_ejabberd_ctl"
     localuser username_password[0]
     localserver node.run_state['config']['domain']
     password username_password[1]
@@ -132,7 +133,7 @@ end
 # Make sure that admins have the Leaf on their roster
 node.run_state['config']['xmpp_users']['admins'].each do |admin_user|
   vine_ejabberd_ctl "ctl" do
-    provider "vine_ejabberd_ejabberdctl"
+    provider "vine_ejabberd_ctl"
     localuser admin_user
     localserver node.run_state['config']['domain']
     user node.run_state['config']['leaves']['jid_user']
