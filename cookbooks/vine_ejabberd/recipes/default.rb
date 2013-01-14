@@ -147,4 +147,4 @@ end
 
 # Send the ejabberd logs to Papertrail
 node.set['papertrail']['watch_files']["#{node['dirs']['log']}/ejabberd/ejabberd.log"  ] = 'ejabberd'
-node.set['papertrail']['watch_files']["#{node['dirs']['log']}/ejabberd/erlang.log"    ] = 'erlang'
+#node.set['papertrail']['watch_files']["#{node['dirs']['log']}/ejabberd/erlang.log"    ] = 'erlang'
