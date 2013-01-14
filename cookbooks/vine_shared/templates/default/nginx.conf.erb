@@ -1,6 +1,6 @@
 worker_processes <%= node['nginx']['worker_processes'] %>;
 user <%= node['nginx']['user'] %><% if node['nginx']['user'] != node['nginx']['group'] %> <%= node['nginx']['group'] %><% end %>;
-error_log  <%= node['nginx']['log_dir'] %>/error.log<% if node.chef_environment =='dev' %> debug<% end %>;
+error_log  <%= node['nginx']['log_dir'] %>/error.log;
 pid        <%= node['nginx']['pid'] %>;
 
 events {

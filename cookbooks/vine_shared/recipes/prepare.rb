@@ -55,6 +55,15 @@ end
   end
 end
 
+# Set up papertrail to archive our logs. Note this only matters if we include the recipe in a run list!
+node.set['papertrail']['remote_port'] = node.run_state['config']['papertrail']['port']
+if node.chef_environment == "dev"
+  node.set['papertrail']['hostname_name'] = 'vagrant'
+else
+  node.set['papertrail']['hostname_name'] = Chef::Config[:node_name]
+end
+node.set['papertrail']['watch_files'] = {}  # we'll merge things into this hash later
+
 # On dev, prepare etc hosts and the MySQL root password
 if node.chef_environment == "dev"
   ruby_block "append entry to /etc/hosts" do

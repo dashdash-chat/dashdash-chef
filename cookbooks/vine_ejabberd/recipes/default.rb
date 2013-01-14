@@ -144,3 +144,7 @@ node.run_state['config']['xmpp_users']['admins'].each do |admin_user|
     action :add_rosteritem
   end
 end
+
+# Send the ejabberd logs to Papertrail
+node.set['papertrail']['watch_files']["#{node['dirs']['log']}/ejabberd/ejabberd.log"  ] = 'ejabberd'
+node.set['papertrail']['watch_files']["#{node['dirs']['log']}/ejabberd/erlang.log"    ] = 'erlang'

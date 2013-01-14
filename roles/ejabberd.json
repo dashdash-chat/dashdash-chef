@@ -11,7 +11,8 @@
     "recipe[chef-client]",
     "role[base]",
     "recipe[build-essential]",
-    "recipe[vine_ejabberd]"
+    "recipe[vine_ejabberd]",
+    "recipe[papertrail]"
   ],
   "env_run_lists": {
   }

@@ -11,7 +11,8 @@
     "recipe[chef-client]",
     "role[base]",
     "role[supervised]",
-    "recipe[vine_xmpp]"
+    "recipe[vine_xmpp]",
+    "recipe[papertrail]"
   ],
   "env_run_lists": {
   }

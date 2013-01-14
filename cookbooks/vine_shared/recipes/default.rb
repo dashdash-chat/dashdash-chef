@@ -8,9 +8,6 @@
 #
 
 # Create the nginx.conf file
-
-node.run_state['config']['domain']
-
 domain = node.run_state['config']['domain']
 if node.run_list.include?("role[xmpp]")  #LATER sigh, not sure how to make this neater
   domain = "#{node.run_state['config']['leaves']['subdomain']}.#{node.run_state['config']['domain']}"
@@ -34,3 +31,8 @@ node.set['supervisor']['inet_username'] = node.run_state['config']['supervisor']
 node.set['supervisor']['inet_password'] = node.run_state['config']['supervisor']['password']
 include_recipe "supervisor"
 #TODO how to reload on new run to re-establish mysql conn? supervisorctl restart all? test this in dashboard first!
+
+# Send the nginx and Supervisor logs to Papertrail
+node.set['papertrail']['watch_files']["#{node['dirs']['log']}/nginx/access.log"          ] = 'nginx_access'
+node.set['papertrail']['watch_files']["#{node['dirs']['log']}/nginx/error.log"           ] = 'nginx_error'
+node.set['papertrail']['watch_files']["#{node['dirs']['log']}/supervisor/supervisord.log"] = 'supervisord'

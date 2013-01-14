@@ -63,6 +63,9 @@
     "access_key_id": "AKIAJXHFTLX4Y24RD7EA",
     "secret_access_key": "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"
   },
+  "papertrail": {
+    "port": 43165
+  },
   "twitter": {
     "consumer_key": "7MDE19OK3Vk3e6QMJ0Xow",
     "consumer_secret": "VcUyKhrSP27HcW1iLLU8yKLlcpmtqDFyVtMQ7Tk1Y"
