@@ -2,7 +2,7 @@ Useful Dev Commands
 ===============
 ```sh
 rvmsudo vagrant destroy && \
-knife node delete dev_all && knife client delete dev_all && \
+knife node delete dev_all_vm2 && knife client delete dev_all_vm2 && \
 sudo rm -rf ~/Dropbox/projects/vine/vine-chef/source_dir/ && \
 time sh upload_all.sh && time rvmsudo vagrant up
 
@@ -75,7 +75,7 @@ knife ec2 server create \
   --config            /Volumes/secret_keys/knife-ec2.rb \
   --image             ami-3d4ff254 \
   --ssh-user          ubuntu \
-  --flavor            t1.micro \
+  --flavor            t1.small \
   --groups            vine-web\
   --run-list          role[web] \
   --node-name         prod_web \
