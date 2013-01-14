@@ -65,6 +65,7 @@ if node.chef_environment == "dev"
     end
   end
   
+  node.set['mysql']['server_root_password'] = node.run_state['config']['mysql']['root_password']
   node.set['mysql']['server_root_user'] = node.run_state['config']['mysql']['root_user']
 end
 
