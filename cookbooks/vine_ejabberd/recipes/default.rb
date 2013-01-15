@@ -107,10 +107,21 @@ end
   end
 end
 
+# Render the ejabberd.cfg template
 template "ejabberd.cfg" do
   path "/etc/ejabberd/ejabberd.cfg"
   source "ejabberd.cfg.erb"
   notifies :restart, "service[ejabberd]", :immediately
+end
+
+# Set up the cron job to rotate the logs - note that this overwrites the old log, but we have it in Papertrail
+cron "rotate ejabberd logs" do
+  user "root"
+  weekday "6"
+  hour "23"
+  minute "0"
+  command "sudo ejabberdctl reopen_log"
+  mailto "lehrburger+vinecron@gmail.com"
 end
 
 # Make sure we have the admin users that we definitely need

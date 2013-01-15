@@ -22,6 +22,24 @@ template "nginx.conf" do
   notifies :reload, 'service[nginx]'
 end
 
+# Set up the cron job to rotate the logs - note that this overwrites the old log, but we have it in Papertrail
+cron "rotate nginx access logs" do
+  user "root"
+  weekday "6"
+  hour "23"
+  minute "05"
+  command "mv #{node['dirs']['log']}/nginx/access.log #{node['dirs']['log']}/nginx/access-old.log && kill -USR1 `cat master.nginx.pid`"
+  mailto "lehrburger+vinecron@gmail.com"
+end
+cron "rotate nginx error logs" do
+  user "root"
+  weekday "6"
+  hour "23"
+  minute "10"
+  command "mv #{node['dirs']['log']}/nginx/error.log  #{node['dirs']['log']}/nginx/error-old.log  && kill -USR1 `cat master.nginx.pid`"
+  mailto "lehrburger+vinecron@gmail.com"
+end
+
 # Set up MySQL, which both vine-web and vine-xmpp need for state
 include_recipe "vine_shared::mysql"
 
