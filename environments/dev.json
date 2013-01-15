@@ -15,7 +15,8 @@
     },
     "ejabberd":   {"log_dir": "/home/vagrant/log_dir/ejabberd"},
     "supervisor": {"log_dir": "/home/vagrant/log_dir/supervisor"},
-    "nginx":      {"log_dir": "/home/vagrant/log_dir/nginx"}
+    "nginx":      {"log_dir": "/home/vagrant/log_dir/nginx"},
+    "mysql": { "tunable": { "wait_timeout": 14400 } }
   },
   "override_attributes": {
   }
