@@ -25,8 +25,8 @@ Vagrant::Config.run do |config|
       "recipe[vine_ejabberd]",
       "recipe[vine_shared::load_dumps]",
       "recipe[vine_xmpp]",
-      "recipe[vine_web]",
-      "recipe[papertrail]"
+      "recipe[vine_web]"#,
+      #"recipe[papertrail]"
     ]
   end
   
