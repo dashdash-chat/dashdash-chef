@@ -169,26 +169,29 @@ end
 end
 
 # grant privileges to the leaves user
-[[node.run_state['config']['mysql']['main_name'], 'users',        [:select, :update, :insert]],
+leaves_privileges = [[node.run_state['config']['mysql']['main_name'], 'users',        [:select, :update, :insert]],
  [node.run_state['config']['mysql']['main_name'], 'edges',        [:select, :update, :insert, :delete]],
  [node.run_state['config']['mysql']['main_name'], 'vinebots',     [:select, :update, :insert, :delete]],
  [node.run_state['config']['mysql']['main_name'], 'participants', [:select, :update, :insert, :delete]],
  [node.run_state['config']['mysql']['main_name'], 'topics',       [:select, :update, :insert, :delete]],
  [node.run_state['config']['mysql']['main_name'], 'commands',     [:select, :insert]],
  [node.run_state['config']['mysql']['main_name'], 'messages',     [:select, :insert]],
- [node.run_state['config']['mysql']['main_name'], 'recipients',   [:insert]]#,
- #The following are needed only for the destructive /purge_user command, so don't leave them as granted most of the time?
- # [node.run_state['config']['mysql']['main_name'], 'user_tasks',         [:select, :delete]],
- # [node.run_state['config']['mysql']['main_name'], 'demos',              [:select, :delete]],
- # [node.run_state['config']['mysql']['main_name'], 'invites',            [:select, :delete, :update]],
- # [node.run_state['config']['mysql']['main_name'], 'blocks',             [:select, :delete]],
- # [node.run_state['config']['mysql']['main_name'], 'artificial_follows', [:select, :delete]],
- # [node.run_state['config']['mysql']['main_name'], 'twitter_follows',    [:select, :delete]],
- # [node.run_state['config']['mysql']['main_name'], 'recipients',         [:select, :delete]],
- # [node.run_state['config']['mysql']['main_name'], 'messages',           [:select, :delete]],
- # [node.run_state['config']['mysql']['main_name'], 'commands',           [:select, :delete]],
- # [node.run_state['config']['mysql']['main_name'], 'users',              [:select, :delete]]
-].each do |db_table_privileges|
+ [node.run_state['config']['mysql']['main_name'], 'recipients',   [:insert]]]
+if node.chef_environment == 'dev'
+  # The following are needed only for the destructive /purge_user command, so be careful and restrict them to the dev environment
+  leaves_privileges = leaves_privileges + [
+    [node.run_state['config']['mysql']['main_name'], 'user_tasks',         [:select, :delete]],
+    [node.run_state['config']['mysql']['main_name'], 'demos',              [:select, :delete]],
+    [node.run_state['config']['mysql']['main_name'], 'invites',            [:select, :delete, :update]],
+    [node.run_state['config']['mysql']['main_name'], 'blocks',             [:select, :delete]],
+    [node.run_state['config']['mysql']['main_name'], 'artificial_follows', [:select, :delete]],
+    [node.run_state['config']['mysql']['main_name'], 'twitter_follows',    [:select, :delete]],
+    [node.run_state['config']['mysql']['main_name'], 'recipients',         [:select, :delete]],
+    [node.run_state['config']['mysql']['main_name'], 'messages',           [:select, :delete]],
+    [node.run_state['config']['mysql']['main_name'], 'commands',           [:select, :delete]],
+    [node.run_state['config']['mysql']['main_name'], 'users',              [:select, :delete]]]
+end
+leaves_privileges.each do |db_table_privileges|
   mysql_database_user node.run_state['config']['mysql']['leaves_user'] do
     connection mysql_connection_info
     database_name db_table_privileges[0]
