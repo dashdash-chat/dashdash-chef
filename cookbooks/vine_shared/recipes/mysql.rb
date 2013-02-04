@@ -176,7 +176,9 @@ leaves_privileges = [[node.run_state['config']['mysql']['main_name'], 'users',  
  [node.run_state['config']['mysql']['main_name'], 'topics',       [:select, :update, :insert, :delete]],
  [node.run_state['config']['mysql']['main_name'], 'commands',     [:select, :insert]],
  [node.run_state['config']['mysql']['main_name'], 'messages',     [:select, :insert]],
- [node.run_state['config']['mysql']['main_name'], 'recipients',   [:insert]]]
+ [node.run_state['config']['mysql']['main_name'], 'recipients',   [:insert]],
+ [node.run_state['config']['mysql']['main_name'], 'invites',      [:select, :insert, :update, :delete]],
+ [node.run_state['config']['mysql']['main_name'], 'blocks' ,      [:select, :insert, :delete]]]
 if node.chef_environment == 'dev'
   # The following are needed only for the destructive /purge_user command, so be careful and restrict them to the dev environment
   leaves_privileges = leaves_privileges + [
