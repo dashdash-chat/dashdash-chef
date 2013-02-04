@@ -119,6 +119,7 @@ end
  [node.run_state['config']['mysql']['main_name'], 'invites',      [:select, :update, :insert]],
  [node.run_state['config']['mysql']['main_name'], 'demos',        [:select, :update, :insert]],
  [node.run_state['config']['mysql']['main_name'], 'edges',        [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'blocks',       [:select]],
  [node.run_state['config']['mysql']['main_name'], 'vinebots',     [:select]],
  [node.run_state['config']['mysql']['main_name'], 'user_tasks',   [:select, :insert]]
 ].each do |db_table_privileges|
