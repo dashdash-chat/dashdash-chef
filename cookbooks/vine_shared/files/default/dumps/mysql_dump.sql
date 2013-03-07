@@ -70,8 +70,18 @@ UNLOCK TABLES;
 
 LOCK TABLES `invites` WRITE;
 /*!40000 ALTER TABLE `invites` DISABLE KEYS */;
-INSERT INTO `invites` (`id`, `code`, `sender`, `recipient`, `used`, `created`) VALUES (9,'004',9,NULL,'0000-00-00 00:00:00','2012-11-30 08:17:41');
+INSERT INTO `invites` (`id`, `code`, `sender`, `created`) VALUES (9,'004',9,'2012-11-30 08:17:41');
 /*!40000 ALTER TABLE `invites` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `invitees`
+--
+
+LOCK TABLES `invitees` WRITE;
+/*!40000 ALTER TABLE `invitees` DISABLE KEYS */;
+INSERT INTO `invitees` (`invite_id`, `invitee_id`, `used`) VALUES (9,53,'2012-12-30 18:17:41');
+/*!40000 ALTER TABLE `invitees` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

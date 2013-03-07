@@ -62,6 +62,7 @@ if node.chef_environment == "dev"
    'user_tasks',
    'demos',
    'invites',
+   'invitees',
    'vinebots',
    'topics',
    'participants',
@@ -116,7 +117,8 @@ end
 
 # grant privileges to the web user
 [[node.run_state['config']['mysql']['main_name'], 'users',        [:select, :update, :insert]],
- [node.run_state['config']['mysql']['main_name'], 'invites',      [:select, :update, :insert]],
+ [node.run_state['config']['mysql']['main_name'], 'invites',      [:select, :insert]],
+ [node.run_state['config']['mysql']['main_name'], 'invitees',     [:select, :insert]],
  [node.run_state['config']['mysql']['main_name'], 'demos',        [:select, :update, :insert]],
  [node.run_state['config']['mysql']['main_name'], 'edges',        [:select]],
  [node.run_state['config']['mysql']['main_name'], 'blocks',       [:select]],
@@ -135,6 +137,7 @@ end
 
 # grant privileges to the graph user
 [[node.run_state['config']['mysql']['main_name'], 'invites',            [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'invitees',           [:select]],
  [node.run_state['config']['mysql']['main_name'], 'commands',           [:select]],
  [node.run_state['config']['mysql']['main_name'], 'messages',           [:select]],
  [node.run_state['config']['mysql']['main_name'], 'recipients',         [:select]],
@@ -178,14 +181,16 @@ leaves_privileges = [[node.run_state['config']['mysql']['main_name'], 'users',  
  [node.run_state['config']['mysql']['main_name'], 'commands',     [:select, :insert]],
  [node.run_state['config']['mysql']['main_name'], 'messages',     [:select, :insert]],
  [node.run_state['config']['mysql']['main_name'], 'recipients',   [:insert]],
- [node.run_state['config']['mysql']['main_name'], 'invites',      [:select, :insert, :update, :delete]],
+ [node.run_state['config']['mysql']['main_name'], 'invites',      [:select, :insert, :delete]],
+ [node.run_state['config']['mysql']['main_name'], 'invitees',     [:select, :insert, :delete]],
  [node.run_state['config']['mysql']['main_name'], 'blocks' ,      [:select, :insert, :delete]]]
 if node.chef_environment == 'dev'
   # The following are needed only for the destructive /purge_user command, so be careful and restrict them to the dev environment
   leaves_privileges = leaves_privileges + [
     [node.run_state['config']['mysql']['main_name'], 'user_tasks',         [:select, :delete]],
     [node.run_state['config']['mysql']['main_name'], 'demos',              [:select, :delete]],
-    [node.run_state['config']['mysql']['main_name'], 'invites',            [:select, :delete, :update]],
+    [node.run_state['config']['mysql']['main_name'], 'invites',            [:select, :delete]],
+    [node.run_state['config']['mysql']['main_name'], 'invitees',           [:select, :delete]],
     [node.run_state['config']['mysql']['main_name'], 'blocks',             [:select, :delete]],
     [node.run_state['config']['mysql']['main_name'], 'artificial_follows', [:select, :delete]],
     [node.run_state['config']['mysql']['main_name'], 'twitter_follows',    [:select, :delete]],
