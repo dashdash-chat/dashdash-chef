@@ -1,0 +1,12 @@
+wd="/home/<%= node.run_state['config']['user'] %>"
+date=`date +"%Y-%m-%d"`
+dest=$date"_ejabberd_snapshots"
+file=$date".tar.gz"
+cd $wd
+mkdir -p $dest
+sudo ejabberdctl dump $wd/$dest/"$date"_ejabberd_dump.erl
+sudo ejabberdctl backup $wd/$dest/"$date"_ejabberd_backup.bak
+tar -zcvf $file $dest
+sudo rm -r $dest
+s3cmd put --no-guess-mime-type --no-progress -v -c $wd/.s3cfg $file s3://<%= node.run_state['config']['s3']['ejabberd_bucket'] %>/ejabberd/snapshots/
+rm $file

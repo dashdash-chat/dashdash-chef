@@ -63,6 +63,12 @@
     "access_key_id": "AKIAJXHFTLX4Y24RD7EA",
     "secret_access_key": "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"
   },
+  "s3": {
+    "ejabberd_bucket": "ejabberd-dev.vine.im",
+    "user comment": "vine-dev-backups-1 AWS IAM user",
+    "access_key_id": "AKIAJTAFZHW4OFCVYAHA",
+    "secret_access_key": "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"
+  },
   "papertrail": {
     "port": 43165
   },

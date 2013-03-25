@@ -124,6 +124,26 @@ cron "rotate ejabberd logs" do
   mailto "lehrburger+vinecron@gmail.com"
 end
 
+# Set up the cron job to snapshot the ejabberd database (using both methods) and store it in S3
+node.set['s3cmd']['url'] = 'https://github.com/lehrblogger/s3cmd/archive/master.tar.gz'
+node.set['s3cmd']['access_key'] = node.run_state['config']['s3']['access_key_id']
+node.set['s3cmd']['secret_key'] = node.run_state['config']['s3']['secret_access_key']
+node.set['s3cmd']['https'] = true
+node.set['s3cmd']['user'] = node.run_state['config']['user']
+node.set['s3cmd']['home'] = "/home/#{node.run_state['config']['user']}"
+include_recipe "s3cmd"
+template "ejabberd_snapshot.sh" do
+  path "#{node['dirs']['source']}/ejabberd_snapshot.sh"
+  source "ejabberd_snapshot.sh.erb"
+end
+cron "ejabberd snapshot to s3" do
+  user "root"
+  hour 9  # run this before the edge calc script
+  minute 0
+  command "sudo sh #{node['dirs']['source']}/ejabberd_snapshot.sh"
+  mailto "lehrburger+vinecron@gmail.com"
+end
+
 # Make sure we have the admin users that we definitely need
 node.run_state['config']['xmpp_users']['admins'].map {|admin_user|
   [admin_user, node.run_state['config']['xmpp_users']['admin_password']]
