@@ -29,9 +29,9 @@
     "xfs":             "= 1.1.0",
     "yum":             "= 2.1.0",
     "zlib":            "= 2.0.0",
-    "vine_shared":     "= 1.0.4",
-    "vine_ejabberd":   "= 1.0.3",
-    "vine_xmpp":       "= 1.0.3",
+    "vine_shared":     "= 1.0.5",
+    "vine_ejabberd":   "= 1.0.4",
+    "vine_xmpp":       "= 1.0.4",
     "vine_web":        "= 1.0.1"
   },
   "json_class": "Chef::Environment",

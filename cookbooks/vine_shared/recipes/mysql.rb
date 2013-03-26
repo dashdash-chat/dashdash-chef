@@ -106,6 +106,7 @@ end
 [[node.run_state['config']['mysql']['web_user'],    node.run_state['config']['mysql']['web_password']],
  [node.run_state['config']['mysql']['graph_user'],  node.run_state['config']['mysql']['graph_password']],
  [node.run_state['config']['mysql']['celery_user'], node.run_state['config']['mysql']['celery_password']],
+ [node.run_state['config']['mysql']['help_user'],   node.run_state['config']['mysql']['help_password']],
  [node.run_state['config']['mysql']['leaves_user'], node.run_state['config']['mysql']['leaves_password']]
 ].each do |user_password|
   mysql_database_user user_password[0] do
@@ -163,6 +164,26 @@ end
  [node.run_state['config']['mysql']['main_name'], 'twitter_follows', [:select, :update, :insert, :delete]]
 ].each do |db_table_privileges|
   mysql_database_user node.run_state['config']['mysql']['celery_user'] do
+    connection mysql_connection_info
+    database_name db_table_privileges[0]
+    table db_table_privileges[1]
+    privileges db_table_privileges[2]
+    host '%'
+    action :grant
+  end
+end
+
+# grant privileges to the help user
+[[node.run_state['config']['mysql']['main_name'], 'users',        [:select, :update]],
+ [node.run_state['config']['mysql']['main_name'], 'edges',        [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'vinebots',     [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'topics',       [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'participants', [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'commands',     [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'messages',     [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'recipients',   [:select]]
+].each do |db_table_privileges|
+  mysql_database_user node.run_state['config']['mysql']['help_user'] do
     connection mysql_connection_info
     database_name db_table_privileges[0]
     table db_table_privileges[1]

@@ -151,7 +151,8 @@ node.run_state['config']['xmpp_users']['admins'].map {|admin_user|
   [node.run_state['config']['xmlrpc']['leaves_user'], node.run_state['config']['xmlrpc']['leaves_password']],
   [node.run_state['config']['xmlrpc']['graph_user'], node.run_state['config']['xmlrpc']['graph_password']],
   [node.run_state['config']['xmlrpc']['web_user'], node.run_state['config']['xmlrpc']['web_password']],
-  [node.run_state['config']['xmpp_users']['echo_user'], node.run_state['config']['xmpp_users']['default_password']]
+  [node.run_state['config']['xmpp_users']['echo_user'], node.run_state['config']['xmpp_users']['default_password']],
+  [node.run_state['config']['xmpp_users']['help_user'], node.run_state['config']['xmpp_users']['help_password']]
 ).each do |username_password|
   vine_ejabberd_ctl "ctl" do
     provider "vine_ejabberd_ctl"

@@ -1,7 +1,7 @@
-cd ~/Dropbox/projects/vine/vine-web  && knife cookbook upload vine_web      -o cookbooks/
-cd ~/Dropbox/projects/vine/vine-xmpp && knife cookbook upload vine_xmpp     -o cookbooks/
-cd ~/Dropbox/projects/vine/vine-chef && knife cookbook upload vine_ejabberd -o cookbooks/
-cd ~/Dropbox/projects/vine/vine-chef && knife cookbook upload vine_shared   -o cookbooks/
+knife cookbook upload vine_web      -o ~/Dropbox/projects/vine/vine-web/cookbooks/
+knife cookbook upload vine_xmpp     -o ~/Dropbox/projects/vine/vine-xmpp/cookbooks/
+knife cookbook upload vine_ejabberd -o ~/Dropbox/projects/vine/vine-chef/cookbooks/
+knife cookbook upload vine_shared   -o ~/Dropbox/projects/vine/vine-chef/cookbooks/
 knife role from file roles/*
 knife environment from file environments/dev.json
 knife environment from file environments/prod.json

@@ -16,6 +16,8 @@
   },
   "xmpp_users": {
     "port": 5222,
+    "help_user": "vineim",
+    "help_password": "ghel2en2foc8jar7em6a",
     "echo_user": "chesire_cat",
     "default_password": "dirj8owp2og3mob6yeg2",
     "employees": ["lehrblogger"],
@@ -54,6 +56,8 @@
     "graph_password": "nay4wem6nis3yu8i3thr",
     "celery_user": "celery",
     "celery_password": "fayk6fu3frob3baj6mi8",
+    "help_user": "helpbot",
+    "help_password": "scarn6id7can4fik5jem",
     "leaves_user": "leaves",
     "leaves_password": "ish9gen8ob8hap7ac9hy"
   },
