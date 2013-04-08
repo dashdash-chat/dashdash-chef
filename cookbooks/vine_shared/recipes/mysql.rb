@@ -103,11 +103,11 @@ end
 
 # But we do want to make sure that users exist with the proper permissions in prod
 # create the users
-[[node.run_state['config']['mysql']['web_user'],    node.run_state['config']['mysql']['web_password']],
- [node.run_state['config']['mysql']['graph_user'],  node.run_state['config']['mysql']['graph_password']],
- [node.run_state['config']['mysql']['celery_user'], node.run_state['config']['mysql']['celery_password']],
- [node.run_state['config']['mysql']['help_user'],   node.run_state['config']['mysql']['help_password']],
- [node.run_state['config']['mysql']['leaves_user'], node.run_state['config']['mysql']['leaves_password']]
+[[node.run_state['config']['mysql']['web_user'],     node.run_state['config']['mysql']['web_password']],
+ [node.run_state['config']['mysql']['graph_user'],   node.run_state['config']['mysql']['graph_password']],
+ [node.run_state['config']['mysql']['celery_user'],  node.run_state['config']['mysql']['celery_password']],
+ [node.run_state['config']['mysql']['helpbot_user'], node.run_state['config']['mysql']['helpbot_password']],
+ [node.run_state['config']['mysql']['leaves_user'],  node.run_state['config']['mysql']['leaves_password']]
 ].each do |user_password|
   mysql_database_user user_password[0] do
     connection mysql_connection_info
@@ -181,9 +181,11 @@ end
  [node.run_state['config']['mysql']['main_name'], 'participants', [:select]],
  [node.run_state['config']['mysql']['main_name'], 'commands',     [:select]],
  [node.run_state['config']['mysql']['main_name'], 'messages',     [:select]],
- [node.run_state['config']['mysql']['main_name'], 'recipients',   [:select]]
+ [node.run_state['config']['mysql']['main_name'], 'recipients',   [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'invites',      [:select]],
+ [node.run_state['config']['mysql']['main_name'], 'invitees',     [:select]]
 ].each do |db_table_privileges|
-  mysql_database_user node.run_state['config']['mysql']['help_user'] do
+  mysql_database_user node.run_state['config']['mysql']['helpbot_user'] do
     connection mysql_connection_info
     database_name db_table_privileges[0]
     table db_table_privileges[1]

@@ -16,8 +16,8 @@
   },
   "xmpp_users": {
     "port": 5222,
-    "help_user": "vineim",
-    "help_password": "ghel2en2foc8jar7em6a",
+    "helpbot_user": "vineim",
+    "helpbot_password": "ghel2en2foc8jar7em6a",
     "echo_user": "cheshire_cat",
     "default_password": "dirj8owp2og3mob6yeg2",
     "employees": ["lehrblogger"],
@@ -33,7 +33,9 @@
     "graph_user": "_graph",
     "graph_password": "av5oap7vek5ka8gry6ph",
     "web_user": "_web",
-    "web_password": "dirj8owp2og3mob6yeg2"
+    "web_password": "dirj8owp2og3mob6yeg2",
+    "helpbot_user": "_helpbot",
+    "helpbot_password": "clis3ox9ji6huv5ceps3"
   },
   "supervisor": {
     "hostport": "localhost:9001",
@@ -56,8 +58,8 @@
     "graph_password": "nay4wem6nis3yu8i3thr",
     "celery_user": "celery",
     "celery_password": "fayk6fu3frob3baj6mi8",
-    "help_user": "helpbot",
-    "help_password": "scarn6id7can4fik5jem",
+    "helpbot_user": "helpbot",
+    "helpbot_password": "scarn6id7can4fik5jem",
     "leaves_user": "leaves",
     "leaves_password": "ish9gen8ob8hap7ac9hy"
   },

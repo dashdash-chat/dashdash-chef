@@ -9,6 +9,6 @@ CREATE TABLE users (
     twitter_token VARCHAR(200) DEFAULT NULL,
     twitter_secret VARCHAR(200) DEFAULT NULL,
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
-    onboarding_stage SMALLINT NOT NULL DEFAULT 0,
+    stage VARCHAR(20) DEFAULT NULL,
     created TIMESTAMP DEFAULT NOW()
 ) ENGINE = InnoDB;

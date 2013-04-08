@@ -119,7 +119,8 @@
   			    {timeout, 5000},
 				{access_commands, [
 					{xmlrpc_leaves, [register, unregister, get_roster, add_rosteritem, delete_rosteritem, user_sessions_info], []},
-					{xmlrpc_web, [check_account, register, unregister, change_password, user_sessions_info], []}
+					{xmlrpc_web, [check_account, register, unregister, change_password, user_sessions_info], []},
+					{xmlrpc_helpbot, [check_account, user_sessions_info], []}
 				]}
   ]}
  ]}.
@@ -192,6 +193,7 @@
 {acl, leaf_components, {server, "<%= node.run_state['config']['leaves']['subdomain'] %>.<%= node.run_state['config']['domain'] %>"}}.
 {acl, leaf_users, {user, "<%= node.run_state['config']['xmlrpc']['leaves_user'] %>", "<%= node.run_state['config']['domain'] %>"}}.
 {acl, web_users, {user, "<%= node.run_state['config']['xmlrpc']['web_user'] %>", "<%= node.run_state['config']['domain'] %>"}}.
+{acl, helpbot, {user, "<%= node.run_state['config']['xmlrpc']['helpbot_user'] %>", "<%= node.run_state['config']['domain'] %>"}}.
 
 %%%.   ============
 %%%'   ACCESS RULES
@@ -236,6 +238,7 @@
 {access, bots_only, [{allow, admin}, {allow, leaf_components}, {allow, server_only}, {deny, all}]}.
 {access, xmlrpc_leaves, [{allow, admin}, {allow, leaf_users}, {deny, all}]}.
 {access, xmlrpc_web, [{allow, admin}, {allow, web_users}, {deny, all}]}.
+{access, xmlrpc_helpbot, [{allow, admin}, {allow, helpbot}, {deny, all}]}.
 
 
 %%%.   ================
