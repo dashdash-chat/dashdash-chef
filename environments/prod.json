@@ -31,7 +31,7 @@
     "zlib":            "= 2.0.0",
     "vine_shared":     "= 1.0.6",
     "vine_ejabberd":   "= 1.0.5",
-    "vine_xmpp":       "= 1.0.4",
+    "vine_xmpp":       "= 1.0.5",
     "vine_web":        "= 1.0.1"
   },
   "json_class": "Chef::Environment",
