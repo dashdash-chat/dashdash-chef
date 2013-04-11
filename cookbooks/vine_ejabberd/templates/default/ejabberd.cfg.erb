@@ -187,7 +187,7 @@
 {acl, local, {user_regexp, ""}}.
 
 %%
-%% Vine access control lists
+%% Dashdash access control lists
 %%
 {acl, server_only, {user, "", "<%= node.run_state['config']['domain'] %>"}}.
 {acl, leaf_components, {server, "<%= node.run_state['config']['leaves']['subdomain'] %>.<%= node.run_state['config']['domain'] %>"}}.
@@ -233,7 +233,7 @@
 %% is limited to 1 account every 10 minutes. To disable, specify: infinity
 {registration_timeout, infinity}.
 %%
-%% Vine access rules
+%% Dashdash access rules
 %%
 {access, bots_only, [{allow, admin}, {allow, leaf_components}, {allow, server_only}, {deny, all}]}.
 {access, xmlrpc_leaves, [{allow, admin}, {allow, leaf_users}, {deny, all}]}.

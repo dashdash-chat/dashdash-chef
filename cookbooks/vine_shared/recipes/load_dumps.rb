@@ -2,7 +2,7 @@
 # Cookbook Name:: vine_shared
 # Recipe:: db_dump
 #
-# Copyright 2012, Vine.IM
+# Copyright 2013, Dashdash, Inc.
 #
 # All rights reserved - Do Not Redistribute
 #

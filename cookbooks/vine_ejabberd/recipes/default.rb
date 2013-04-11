@@ -2,7 +2,7 @@
 # Cookbook Name:: vine_ejabberd
 # Recipe:: default
 #
-# Copyright 2012, Vine.IM
+# Copyright 2013, Dashdash, Inc.
 #
 # All rights reserved - Do Not Redistribute
 #
@@ -106,8 +106,6 @@ end
     mode 0600
   end
 end
-
-# Render the ejabberd.cfg template
 template "ejabberd.cfg" do
   path "/etc/ejabberd/ejabberd.cfg"
   source "ejabberd.cfg.erb"
@@ -172,7 +170,7 @@ node.run_state['config']['xmpp_users']['admins'].each do |admin_user|
     user node.run_state['config']['leaves']['jid_user']
     server "#{node.run_state['config']['leaves']['subdomain']}.#{node.run_state['config']['domain']}"
     nick "Leaf-#{node.chef_environment}"
-    group "Vine"
+    group "Dashdash"
     subs "both"
     action :add_rosteritem
   end

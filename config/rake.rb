@@ -6,22 +6,22 @@
 ###
 
 # The company name - used for SSL certificates, and in srvious other places
-COMPANY_NAME = "Vine.IM"
+COMPANY_NAME = "Dashdash, Inc."
 
 # The Country Name to use for SSL Certificates
 SSL_COUNTRY_NAME = "US"
 
 # The State Name to use for SSL Certificates
-SSL_STATE_NAME = "Several"
+SSL_STATE_NAME = "New York"
 
 # The Locality Name for SSL - typically, the city
-SSL_LOCALITY_NAME = "Locality"
+SSL_LOCALITY_NAME = "New York City"
 
 # What department?
-SSL_ORGANIZATIONAL_UNIT_NAME = "Operations"
+SSL_ORGANIZATIONAL_UNIT_NAME = "Engineering"
 
 # The SSL contact email address
-SSL_EMAIL_ADDRESS = "info@vine-inc.im"
+SSL_EMAIL_ADDRESS = "info@dashdashinc.com"
 
 # License for new Cookbooks
 # Can be :apachev2 or :none
