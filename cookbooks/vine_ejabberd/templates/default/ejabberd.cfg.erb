@@ -72,7 +72,7 @@
 			%% certificate, specify the full path to the
 			%% file and uncomment this line:
 			%%
-			{certfile, "<%= node['dirs']['ssl'] %>/web_ssl_both.crt"}, starttls,
+			{certfile, "<%= node['dirs']['ssl'] %>/web_ssl_both.crt"}, starttls, starttls_required,
 			{access, c2s},
 			{shaper, c2s_shaper},
 			{max_stanza_size, 65536}
