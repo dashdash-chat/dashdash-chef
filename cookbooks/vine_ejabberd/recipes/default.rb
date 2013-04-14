@@ -28,6 +28,7 @@ end
 package "libexpat1-dev"
 execute "./configure, make, and install ejabberd" do
   command "./configure && make && sudo make install"
+  environment 'HOME' => "/home/#{node.run_state['config']['user']}"
   cwd "#{ejabberd_repo_dir}/src"
   action :run
 end
@@ -67,6 +68,7 @@ ejabberd_lib_dir = "/lib/ejabberd"
 ['mod_admin_extra', 'ejabberd_xmlrpc'].each do |module_name|
   execute "build #{module_name} module for ejabberd" do
     command "./build.sh"
+    environment 'HOME' => "/home/#{node.run_state['config']['user']}"
     cwd "#{modules_repo_dir}/#{module_name}/trunk"
     action :run
   end
