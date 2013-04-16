@@ -32,6 +32,24 @@ http {
         server <%= node.run_state['config']['supervisor']['hostport'] %> max_fails=5 fail_timeout=10;
     }
     
+    <% unless node.chef_environment == "dev" -%>
+    server {
+        listen 443 ssl;
+        client_max_body_size 4G;
+        server_name vine.im;
+        
+        ssl_certificate      /home/ubuntu/ssl/ssl_vine.crt;
+        ssl_certificate_key  /home/ubuntu/ssl/ssl_vine.key;
+        ssl_session_cache    shared:SSL:10m;
+        ssl_session_timeout  10m;
+        ssl_protocols  SSLv2 SSLv3 TLSv1;
+        ssl_ciphers  HIGH:!aNULL:!MD5;
+        ssl_prefer_server_ciphers   on;
+        
+        rewrite ^ https://<%= @domain %>$request_uri permanent;
+    }
+    <% end -%>
+    
     server {
           listen 80;
           server_name <%= @domain %>;
