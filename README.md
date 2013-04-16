@@ -14,6 +14,8 @@ knife data bag show dev config       -Fj --secret-file /Volumes/secret_keys/data
 knife data bag edit prod config --secret-file /Volumes/secret_keys/data_bags/prod_key
 knife data bag show prod config -Fj > data_bags/prod/config.json
 
+# To make a new hashed supervisor password:
+echo -n password | shasum -a 1 | awk '{print $1}'
 ```
 Useful Deploy Commands
 ===============
