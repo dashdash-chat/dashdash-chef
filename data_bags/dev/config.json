@@ -88,5 +88,8 @@
     "auth_token": "no dev version!",
     "from_number": "+17542276773",
     "to_numbers": []
+  },
+  "mailchimp": {
+    "api_key": "3663c2bc15572364bcf98bd74bab7723-us1"
   }
 }
