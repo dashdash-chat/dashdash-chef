@@ -5,4 +5,4 @@ $ORIGIN dashdash.co.
 @ 172800 IN NS ns-653.awsdns-17.net.
 @ 172800 IN NS ns-273.awsdns-34.com.
 @ 900 IN SOA ns-2021.awsdns-60.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400
-www 300 IN CNAME dashdash.co
+www 300 IN CNAME dashdash.co.

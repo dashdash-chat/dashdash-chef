@@ -5,4 +5,4 @@ $ORIGIN dashdsah.com.
 @ 172800 IN NS ns-161.awsdns-20.com.
 @ 172800 IN NS ns-632.awsdns-15.net.
 @ 900 IN SOA ns-1964.awsdns-53.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400
-www 300 IN CNAME dashdsah.com
+www 300 IN CNAME dashdsah.com.

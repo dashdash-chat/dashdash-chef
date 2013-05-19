@@ -11,9 +11,9 @@ $ORIGIN dashdash.com.
 @ 172800 IN NS ns-645.awsdns-16.net.
 @ 900 IN SOA ns-1860.awsdns-40.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400
 @ 3600 IN TXT "google-site-verification=wf29PjGZp7Exin3ppCTolMg_2Rc6rn7vcdNARysAzYw"
-_xmpp-client._tcp 300 IN SRV 0 5 5222 xmpp.dashdash.com
+_xmpp-client._tcp 300 IN SRV 0 5 5222 xmpp.dashdash.com.
 _xmppconnect 300 IN TXT "_xmpp-client-xbosh=https://xmpp.dashdash.com:5281/http-bind/"
-blog 3600 IN CNAME domains.tumblr.com
+blog 3600 IN CNAME domains.tumblr.com.
 leaves 300 IN A 54.235.240.250
-www 300 IN CNAME dashdash.com
+www 300 IN CNAME dashdash.com.
 xmpp 300 IN A 107.21.218.247
