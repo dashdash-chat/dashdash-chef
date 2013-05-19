@@ -1,0 +1,16 @@
+$ORIGIN vine.im.
+@ 300 IN A 184.72.244.2
+@ 300 IN MX 10 spool.mail.gandi.net.
+@ 300 IN MX 50 fb.mail.gandi.net.
+@ 172800 IN NS ns-754.awsdns-30.net.
+@ 172800 IN NS ns-1317.awsdns-36.org.
+@ 172800 IN NS ns-33.awsdns-04.com.
+@ 172800 IN NS ns-2017.awsdns-60.co.uk.
+@ 900 IN SOA ns-754.awsdns-30.net. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400
+_xmpp-client._tcp 300 IN SRV 0 5 5222 xmpp.vine.im
+_xmppconnect 300 IN TXT "_xmpp-client-xbosh=https://xmpp.vine.im:5281/http-bind/"
+stage 300 IN A 54.235.124.190
+_xmpp-client._tcp.stage 300 IN SRV 0 5 5222 delvicious.com
+_xmpp-server._tcp.stage 300 IN SRV 0 5 5269 delvicious.com
+www 300 IN CNAME vine.im
+xmpp 300 IN A 54.235.124.190
