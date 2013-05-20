@@ -83,6 +83,7 @@ remote_file "/tmp/xmlrpc-1.13-ipr2.tgz" do
   notifies :run, "bash[install_xmlrpc_erlang]", :immediately
 end
 bash "install_xmlrpc_erlang" do
+  environment 'HOME' => "/home/#{node.run_state['config']['user']}"
   cwd "/tmp"
   code <<-EOH
     tar -xzvf xmlrpc-1.13-ipr2.tgz
