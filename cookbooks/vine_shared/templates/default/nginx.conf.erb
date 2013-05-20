@@ -38,8 +38,8 @@ http {
         client_max_body_size 4G;
         server_name vine.im;
         
-        ssl_certificate      /home/ubuntu/ssl/ssl_vine.crt;
-        ssl_certificate_key  /home/ubuntu/ssl/ssl_vine.key;
+        ssl_certificate      /home/ubuntu/ssl/ssl.crt;
+        ssl_certificate_key  /home/ubuntu/ssl/ssl.key;
         ssl_session_cache    shared:SSL:10m;
         ssl_session_timeout  10m;
         ssl_protocols  SSLv2 SSLv3 TLSv1;
@@ -65,7 +65,7 @@ http {
         server_name <%= @domain %>;
         keepalive_timeout 70;
         
-        ssl_certificate      <%= node['dirs']['ssl'] %>/ssl.crt;
+        ssl_certificate      <%= node['dirs']['ssl'] %>/ssl.crt;  # TODO make sure Chef reloads nginx if this file changes
         ssl_certificate_key  <%= node['dirs']['ssl'] %>/ssl.key;
         ssl_session_cache    shared:SSL:10m;
         ssl_session_timeout  10m;
