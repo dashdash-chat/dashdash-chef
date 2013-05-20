@@ -20,15 +20,15 @@ echo -n password | shasum -a 1 | awk '{print $1}'
 Useful Deploy Commands
 ===============
 ```sh
-ssh -i /Volumes/secret_keys/aws_key_pairs/vine-ejabberd-key.pem ubuntu@107.21.218.247
-ssh -i /Volumes/secret_keys/aws_key_pairs/vine-leaves-key.pem ubuntu@54.235.240.250
-ssh -i /Volumes/secret_keys/aws_key_pairs/vine-web-key.pem ubuntu@184.72.244.2
+ssh -i /Volumes/secret_keys/aws_key_pairs/dashdash-ejabberd.pem ubuntu@107.21.218.247
+ssh -i /Volumes/secret_keys/aws_key_pairs/dashdash-leaves.pem ubuntu@54.235.240.250
+ssh -i /Volumes/secret_keys/aws_key_pairs/dashdash-web.pem ubuntu@184.72.244.2
 
 knife ssh name:prod_SERVER \
   --config            /Volumes/secret_keys/knife-ec2.rb \
-  --server-url        https://api.opscode.com/organizations/vine \
+  --server-url        https://api.opscode.com/organizations/dashdash \
   --key               /Volumes/secret_keys/lehrblogger.pem \
-  --identity-file     /Volumes/secret_keys/aws_key_pairs/vine-SERVER-key.pem \
+  --identity-file     /Volumes/secret_keys/aws_key_pairs/dashdash-SERVER.pem \
   --ssh-user          ubuntu \
   "COMMAND"
 
@@ -40,13 +40,13 @@ knife ec2 server create \
   --image             ami-3d4ff254 \
   --ssh-user          ubuntu \
   --flavor            m1.small \
-  --groups            vine-ejabberd\
+  --groups            dashdash-ejabberd\
   --run-list          role[ejabberd] \
   --node-name         prod_ejabberd \
-  --server-url        https://api.opscode.com/organizations/vine \
+  --server-url        https://api.opscode.com/organizations/dashdash \
   --environment       prod \
-  --ssh-key           vine-ejabberd-key \
-  --identity-file     /Volumes/secret_keys/aws_key_pairs/vine-ejabberd-key.pem \
+  --ssh-key           dashdash-ejabberd \
+  --identity-file     /Volumes/secret_keys/aws_key_pairs/dashdash-ejabberd.pem \
   --availability-zone us-east-1b \
   --bootstrap-version 10.16.4 \
   --ebs-no-delete-on-term
@@ -59,13 +59,13 @@ knife ec2 server create \
   --image             ami-3d4ff254 \
   --ssh-user          ubuntu \
   --flavor            m1.small \
-  --groups            vine-leaves\
+  --groups            dashdash-leaves\
   --run-list          role[xmpp] \
   --node-name         prod_leaves \
-  --server-url        https://api.opscode.com/organizations/vine \
+  --server-url        https://api.opscode.com/organizations/dashdash \
   --environment       prod \
-  --ssh-key           vine-leaves-key \
-  --identity-file     /Volumes/secret_keys/aws_key_pairs/vine-leaves-key.pem \
+  --ssh-key           dashdash-leaves \
+  --identity-file     /Volumes/secret_keys/aws_key_pairs/dashdash-leaves.pem \
   --availability-zone us-east-1b \
   --bootstrap-version 10.16.4 \
   --ebs-no-delete-on-term
@@ -77,14 +77,14 @@ knife ec2 server create \
   --config            /Volumes/secret_keys/knife-ec2.rb \
   --image             ami-3d4ff254 \
   --ssh-user          ubuntu \
-  --flavor            t1.small \
-  --groups            vine-web\
+  --flavor            m1.small \
+  --groups            dashdash-web\
   --run-list          role[web] \
   --node-name         prod_web \
-  --server-url        https://api.opscode.com/organizations/vine \
+  --server-url        https://api.opscode.com/organizations/dashdash \
   --environment       prod \
-  --ssh-key           vine-web-key \
-  --identity-file     /Volumes/secret_keys/aws_key_pairs/vine-web-key.pem \
+  --ssh-key           dashdash-web \
+  --identity-file     /Volumes/secret_keys/aws_key_pairs/dashdash-web.pem \
   --availability-zone us-east-1b \
   --bootstrap-version 10.16.4 \
   --ebs-no-delete-on-term

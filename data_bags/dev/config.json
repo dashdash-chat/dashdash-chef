@@ -64,16 +64,16 @@
     "leaves_password": "ish9gen8ob8hap7ac9hy"
   },
   "aws": {
-    "sqs_prefix": "vine-dev-",
-    "user_comment": "vine-dev-1 AWS IAM user",
-    "access_key_id": "AKIAJXHFTLX4Y24RD7EA",
-    "secret_access_key": "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"
+    "sqs_prefix": "dev-",
+    "user_comment": "sqs-dev-user1 AWS IAM user",
+    "access_key_id": "AKIAJ64S6CYEKK5NRZXQ",
+    "secret_access_key": "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"
   },
   "s3": {
-    "ejabberd_bucket": "ejabberd-dev.vine.im",
-    "user comment": "vine-dev-backups-1 AWS IAM user",
-    "access_key_id": "AKIAJTAFZHW4OFCVYAHA",
-    "secret_access_key": "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"
+    "ejabberd_bucket": "ejabberd-dev.dashdash.com",
+    "user comment": "s3-backups-dev-user1 AWS IAM user",
+    "access_key_id": "AKIAIRKKQI54RAG2WO4A",
+    "secret_access_key": "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"
   },
   "papertrail": {
     "port": 43165
