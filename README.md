@@ -1,4 +1,4 @@
-Useful Dev Commands
+Dev Commands
 ===============
 ```sh
 rvmsudo vagrant destroy && \
@@ -17,7 +17,18 @@ knife data bag show prod config -Fj > data_bags/prod/config.json
 # To make a new hashed supervisor password:
 echo -n password | shasum -a 1 | awk '{print $1}'
 ```
-Useful Deploy Commands
+
+MySQL querues
+===============
+```sql
+# New users
+SELECT id, name, twitter_id, email, stage, created FROM users WHERE is_active = 1 AND created > '2013-04-22 00:00:00' ORDER BY created ASC;
+
+# Active conversations with participants
+SELECT p.vinebot_id, GROUP_CONCAT(users.name SEPARATOR ', ') AS participants FROM participants AS p INNER JOIN users ON p.user_id = users.id GROUP BY p.vinebot_id;
+```
+
+Deploy Commands
 ===============
 ```sh
 ssh -i /Volumes/secret_keys/aws_key_pairs/dashdash-ejabberd.pem ubuntu@107.21.218.247
