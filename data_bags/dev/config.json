@@ -48,7 +48,7 @@
   },
   "mysql": {
     "host": "localhost",
-    "main_name": "vine",
+    "main_name": "dashdash",
     "celery_name": "celery_db",
     "root_user": "root",
     "root_password": "os6juc8ik4if6jiev3co",

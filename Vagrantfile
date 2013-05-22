@@ -13,9 +13,9 @@ Vagrant::Config.run do |config|
   config.vm.forward_port 5281, 5281
   
   config.vm.provision :chef_client do |chef| 
-    chef.chef_server_url = "https://api.opscode.com/organizations/vine"
-    chef.validation_key_path = "/Volumes/secret_keys/vine-validator.pem"
-    chef.validation_client_name = "vine-validator"
+    chef.chef_server_url = "https://api.opscode.com/organizations/dashdash"
+    chef.validation_key_path = "/Volumes/secret_keys/dashdash-validator.pem"
+    chef.validation_client_name = "dashdash-validator"
     chef.encrypted_data_bag_secret_key_path = "/Volumes/secret_keys/data_bags/dev_key"
     chef.node_name = "dev_all_vm2"
     chef.environment = "dev"

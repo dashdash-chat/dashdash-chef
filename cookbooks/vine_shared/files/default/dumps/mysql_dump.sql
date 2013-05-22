@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.1.63, for debian-linux-gnu (i486)
 --
--- Host: localhost    Database: vine
+-- Host: localhost    Database: dashdash
 -- ------------------------------------------------------
 -- Server version	5.1.63-0ubuntu0.10.04.1
 

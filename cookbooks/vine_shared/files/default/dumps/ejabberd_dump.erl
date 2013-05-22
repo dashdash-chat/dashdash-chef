@@ -367,9 +367,9 @@
         [],[]}.
 {roster,{"admin2","dev.vine.im",{"leaf","leaves.dev.vine.im",[]}},
         {"admin2","dev.vine.im"},
-        {"leaf","leaves.dev.vine.im",[]},
+        {"leaf-dev","leaves.dev.vine.im",[]},
         "Leaf",both,none,
-        ["Admin"],
+        ["Dashdash"],
         [],[]}.
 {roster,{"jabberwocky","dev.vine.im",
          {"vinebot_5vzwqotzbfgxd74r3uygm1ay2","leaves.dev.vine.im",[]}},
@@ -409,8 +409,8 @@
 {roster,{"admin1","dev.vine.im",{"leaf","leaves.dev.vine.im",[]}},
         {"admin1","dev.vine.im"},
         {"leaf","leaves.dev.vine.im",[]},
-        "Leaf",both,none,
-        ["Admin"],
+        "Leaf-dev",both,none,
+        ["Dashdash"],
         [],[]}.
 {last_activity,{"alice","dev.vine.im"},1354434827,[]}.
 {last_activity,{"_graph","dev.vine.im"},1354274643,[]}.

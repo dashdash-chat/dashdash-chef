@@ -1,4 +1,4 @@
-CREATE TABLE temp (
+CREATE TABLE messages (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     vinebot_id INT DEFAULT NULL,
     FOREIGN KEY (vinebot_id) REFERENCES vinebots(id),
