@@ -282,7 +282,11 @@
   {mod_version,   []},
   %% {mod_multicast, []},
   {mod_register, [{access, register}]}, %% let existing accounts change their passwords via in-band registration
-  {mod_admin_extra, []}
+  {mod_admin_extra, []},
+  {mod_session, [
+                 {recipient_jid, "<%= node.run_state['config']['leaves']['subdomain'] %>.<%= node.run_state['config']['domain'] %>"},
+                 {opened_signal, "<%= node.run_state['config']['leaves']['session_opened_signal'] %>"}
+                ]}
  ]}.
 
 

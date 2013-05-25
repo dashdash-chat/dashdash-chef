@@ -12,7 +12,8 @@
     "jid_user": "leaf",
     "subdomain": "leaves",
     "secret": "is3joic8vorn8uf4ge4o",
-    "max_leaves": 10
+    "max_leaves": 10,
+    "session_opened_signal": "session_opened"
   },
   "xmpp_users": {
     "port": 5222,
