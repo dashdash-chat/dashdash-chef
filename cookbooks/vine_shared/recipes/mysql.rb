@@ -204,7 +204,7 @@ leaves_privileges = [[node.run_state['config']['mysql']['main_name'], 'users',  
  [node.run_state['config']['mysql']['main_name'], 'commands',     [:select, :insert]],
  [node.run_state['config']['mysql']['main_name'], 'messages',     [:select, :update, :insert]],
  [node.run_state['config']['mysql']['main_name'], 'recipients',   [:select, :insert, :delete]],
- [node.run_state['config']['mysql']['main_name'], 'invites',      [:select, :insert, :delete]],
+ [node.run_state['config']['mysql']['main_name'], 'invites',      [:select, :update, :insert, :delete]],
  [node.run_state['config']['mysql']['main_name'], 'invitees',     [:select, :insert, :delete]],
  [node.run_state['config']['mysql']['main_name'], 'blocks' ,      [:select, :insert, :delete]]]
 if node.chef_environment == 'dev'
