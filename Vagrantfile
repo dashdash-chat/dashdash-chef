@@ -23,7 +23,7 @@ Vagrant::Config.run do |config|
       "role[base]",
       "role[supervised]",
       "recipe[vine_ejabberd]",
-      "recipe[vine_shared::load_dumps]",
+      #"recipe[vine_shared::load_dumps]",
       "recipe[vine_xmpp]",
       "recipe[vine_web]"#,
       #"recipe[papertrail]"
