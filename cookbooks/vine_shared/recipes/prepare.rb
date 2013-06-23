@@ -101,7 +101,7 @@ end
   ruby_block "append line to history" do
     block do
       file = Chef::Util::FileEdit.new(bash_history)
-      file.insert_line_if_no_match(command, command)  # regex never matches anything
+      file.insert_line_if_no_match("/#{Regexp.escape(command)}/", command)
       file.write_file
     end
   end
