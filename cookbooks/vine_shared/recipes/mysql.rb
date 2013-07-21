@@ -119,7 +119,7 @@ end
 # grant privileges to the web user
 [[node.run_state['config']['mysql']['main_name'], 'users',        [:select, :update, :insert]],
  [node.run_state['config']['mysql']['main_name'], 'invites',      [:select, :insert]],
- [node.run_state['config']['mysql']['main_name'], 'invitees',     [:select, :insert]],
+ [node.run_state['config']['mysql']['main_name'], 'invitees',     [:select, :update, :insert]],
  [node.run_state['config']['mysql']['main_name'], 'demos',        [:select, :update, :insert]],
  [node.run_state['config']['mysql']['main_name'], 'edges',        [:select]],
  [node.run_state['config']['mysql']['main_name'], 'blocks',       [:select]],
