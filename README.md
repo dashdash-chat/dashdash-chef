@@ -31,9 +31,7 @@ SELECT p.vinebot_id, GROUP_CONCAT(users.name SEPARATOR ', ') AS participants FRO
 Deploy Commands
 ===============
 ```sh
-ssh -i /Volumes/secret_keys/aws_key_pairs/dashdash-ejabberd.pem ubuntu@107.21.218.247
-ssh -i /Volumes/secret_keys/aws_key_pairs/dashdash-leaves.pem ubuntu@54.235.240.250
-ssh -i /Volumes/secret_keys/aws_key_pairs/dashdash-web.pem ubuntu@184.72.244.2
+ssh -i /Volumes/secret_keys/aws_key_pairs/dashdash-consolidated.pem ubuntu@54.83.7.191
 
 knife ssh name:prod_SERVER \
   --config            /Volumes/secret_keys/knife-ec2.rb \
@@ -44,61 +42,22 @@ knife ssh name:prod_SERVER \
   "COMMAND"
 
 time sh upload_all.sh && \
-knife node delete prod_ejabberd && \
-knife client delete prod_ejabberd && \
+knife node delete prod_consolidated && \
+knife client delete prod_consolidated && \
 knife ec2 server create \
   --config            /Volumes/secret_keys/knife-ec2.rb \
-  --image             ami-3d4ff254 \
+  --image             ami-59a4a230 \
   --ssh-user          ubuntu \
   --flavor            m1.small \
-  --groups            dashdash-ejabberd\
-  --run-list          role[ejabberd] \
-  --node-name         prod_ejabberd \
+  --groups            dashdash-consolidated \
+  --run-list          "'role[consolidated]'" \
+  --node-name         prod_consolidated \
   --server-url        https://api.opscode.com/organizations/dashdash \
   --environment       prod \
-  --ssh-key           dashdash-ejabberd \
-  --identity-file     /Volumes/secret_keys/aws_key_pairs/dashdash-ejabberd.pem \
+  --ssh-key           dashdash-consolidated \
+  --identity-file     /Volumes/secret_keys/aws_key_pairs/dashdash-consolidated.pem \
   --availability-zone us-east-1b \
-  --bootstrap-version 10.16.4 \
+  --bootstrap-version 10.32.2 \
   --ebs-no-delete-on-term
-
-time sh upload_all.sh && \
-knife node delete prod_leaves && \
-knife client delete prod_leaves && \
-knife ec2 server create \
-  --config            /Volumes/secret_keys/knife-ec2.rb \
-  --image             ami-3d4ff254 \
-  --ssh-user          ubuntu \
-  --flavor            m1.small \
-  --groups            dashdash-leaves\
-  --run-list          role[xmpp] \
-  --node-name         prod_leaves \
-  --server-url        https://api.opscode.com/organizations/dashdash \
-  --environment       prod \
-  --ssh-key           dashdash-leaves \
-  --identity-file     /Volumes/secret_keys/aws_key_pairs/dashdash-leaves.pem \
-  --availability-zone us-east-1b \
-  --bootstrap-version 10.16.4 \
-  --ebs-no-delete-on-term
-
-time sh upload_all.sh && \
-knife node delete prod_web && \
-knife client delete prod_web && \
-knife ec2 server create \
-  --config            /Volumes/secret_keys/knife-ec2.rb \
-  --image             ami-3d4ff254 \
-  --ssh-user          ubuntu \
-  --flavor            m1.small \
-  --groups            dashdash-web\
-  --run-list          role[web] \
-  --node-name         prod_web \
-  --server-url        https://api.opscode.com/organizations/dashdash \
-  --environment       prod \
-  --ssh-key           dashdash-web \
-  --identity-file     /Volumes/secret_keys/aws_key_pairs/dashdash-web.pem \
-  --availability-zone us-east-1b \
-  --bootstrap-version 10.16.4 \
-  --ebs-no-delete-on-term
-
 ```
 

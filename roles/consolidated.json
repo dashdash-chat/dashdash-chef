@@ -1,0 +1,23 @@
+{
+  "name": "consolidated",
+  "description": "the consolidated Dashdash server acting in ejabberd, xmpp, and web roles",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+  },
+  "override_attributes": {
+  },
+  "chef_type": "role",
+  "run_list": [
+    "recipe[apt]",
+    "recipe[chef-client]",
+    "role[base]",
+    "role[supervised]",
+    "recipe[build-essential]",
+    "recipe[vine_ejabberd]",
+    "recipe[vine_xmpp]",
+    "recipe[vine_web]",
+    "recipe[papertrail]"
+  ],
+  "env_run_lists": {
+  }
+}

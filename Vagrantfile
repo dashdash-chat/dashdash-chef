@@ -20,6 +20,7 @@ Vagrant::Config.run do |config|
     chef.node_name = "dev_all_vm2"
     chef.environment = "dev"
     chef.run_list = [
+      "recipe[apt]",
       "role[base]",
       "role[supervised]",
       "recipe[vine_ejabberd]",

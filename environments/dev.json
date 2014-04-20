@@ -6,7 +6,7 @@
   "json_class": "Chef::Environment",
   "chef_type": "environment",
   "default_attributes": {
-    "omnibus_updater": { "version": "10.16.4" },
+    "omnibus_updater": { "version": "10.32.2" },
     "dirs": {
       "source": "/vagrant/source_dir",
       "log":    "/home/vagrant/log_dir",
