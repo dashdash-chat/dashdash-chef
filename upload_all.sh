@@ -5,9 +5,10 @@ knife cookbook upload vine_xmpp     -o ~/Dropbox/projects/vine/vine-xmpp/cookboo
 knife role from file roles/*
 knife environment from file environments/dev.json
 knife environment from file environments/prod.json
-# knife data bag from file dev config.json    --secret-file /Volumes/secret_keys/data_bags/dev_key
-# #knife data bag from file prod config.json
-# knife data bag from file dev vine_web.json # note these need the beginning and ending of key
+# knife data bag from file dev  config.json    --secret-file /Volumes/secret_keys/data_bags/dev_key
+# knife data bag from file prod config.json
+
+# knife data bag from file dev vine_web.json
 # knife data bag from file dev vine_xmpp.json
 # knife data bag from file prod vine_web.json
 # knife data bag from file prod vine_xmpp.json
