@@ -1,3 +1,25 @@
+Incomplete Checklist for Refreshing Security
+===============
+
+ - Copy down a dump.erl file from the first ejabberd
+ - Make a new folder in vine_secrets and update knife.rb both there and in ~.
+ - Get a new SSL certificate.
+ - Generate new keys for the data bags with `openssl rand -base64 512 | tr -d '\r\n'`
+ - Generate new deploy keys for both vine_web and vine_xmpp, put them in GitHub, encrypt them with the keys above, put them in the data bags.
+ - Get a new aws_key_pair, and either delete the old one (forever!) or update the places where it's specified.
+ - Regenerate the organization and user .pems on the Chef website
+ - Change all of the passwords in the main databag (including API keys from other services)
+ - Deploy the server. NOTE, run `sudo apt-get -q -y install rsyslog-gnutls` while ejabberd or something is compiling, otherwise papertrail will fail right before the end! TODO: put this in a recipe.
+ - Run `sudo apt-get upgrade all` to update the packages.
+ - Copy up the dump from the othe machine and run `sudo ejabberdctl load /home/ubuntu/ejabberd_dump_cutover.erl` (possibly after modifying permissions).
+ - Start ejabberd with `sudo ejabberdctl start`
+ - Reassociate the elastic IP
+ - Change over CloudWatch alerts
+ - Test everything!
+
+All of this will take at least 3-4 hours, and that's assuming Chef hasn't broken anything with random version updates, which it probably has. Starting up a fresh server alone takes at least 25 minutes :-/
+
+
 Dev Commands
 ===============
 ```sh
@@ -55,7 +77,7 @@ knife ec2 server create \
   --server-url        https://api.opscode.com/organizations/dashdash \
   --environment       prod \
   --ssh-key           dashdash-consolidated \
-  --identity-file     /Volumes/secret_keys/aws_key_pairs/dashdash-consolidated.pem \
+  --identity-file     /Volumes/secret_keys/post-shellshock/aws_key_pairs/dashdash-consolidated.pem \
   --availability-zone us-east-1b \
   --bootstrap-version 10.32.2 \
   --ebs-no-delete-on-term

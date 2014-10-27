@@ -20,7 +20,7 @@
     "ohai":            "= 1.1.6",
     "omnibus_updater": "= 1.0.0",
     "openssl":         "= 1.1.0",
-    "papertrail":      "= 0.0.3",
+    "papertrail":      "= 0.0.6",
     "postgresql":      "= 2.1.0",
     "python":          "= 1.4.4",
     "rsyslog":         "= 1.12.2",
