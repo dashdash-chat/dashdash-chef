@@ -14,6 +14,7 @@ Incomplete Checklist for Refreshing Security
  - Copy up the dump from the othe machine and run `sudo ejabberdctl load /home/ubuntu/ejabberd_dump_cutover.erl` (possibly after modifying permissions).
  - Start ejabberd with `sudo ejabberdctl start`
  - Reassociate the elastic IP
+ - Briefly change IAM policy to let Celery create another SQS queue, grab the ARN, and then update the policy accordingly and delete the old queue. Otherwise papertrail will fill up with logs!
  - Change over CloudWatch alerts
  - Test everything!
 
