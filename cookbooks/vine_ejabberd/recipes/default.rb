@@ -79,7 +79,7 @@ ejabberd_lib_dir = "/lib/ejabberd"
   end
 end
 remote_file "/tmp/xmlrpc-1.13-ipr2.tgz" do
-  source "http://ejabberd.jabber.ru/files/contributions/xmlrpc-1.13-ipr2.tgz"
+  source "https://www.ejabberd.im/files/contributions/xmlrpc-1.13-ipr2.tgz"
   notifies :run, "bash[install_xmlrpc_erlang]", :immediately
 end
 bash "install_xmlrpc_erlang" do
